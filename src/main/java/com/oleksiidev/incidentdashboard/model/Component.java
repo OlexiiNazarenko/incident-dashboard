@@ -2,6 +2,7 @@ package com.oleksiidev.incidentdashboard.model;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,11 +19,14 @@ public class Component {
     @GeneratedValue (strategy= GenerationType.AUTO)
     private long id;
 
+    @Column
     private String name;
 
+    @Column
     @ManyToOne
     private Service service;
 
+    @Column
     @ManyToMany
     private Set<Region> regions;
 }
