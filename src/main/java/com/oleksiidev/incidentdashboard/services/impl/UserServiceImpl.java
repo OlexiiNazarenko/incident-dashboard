@@ -1,6 +1,6 @@
 package com.oleksiidev.incidentdashboard.services.impl;
 
-import com.oleksiidev.incidentdashboard.dto.UserDTO;
+import com.oleksiidev.incidentdashboard.dto.CreateUserDTO;
 import com.oleksiidev.incidentdashboard.model.Role;
 import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.repositories.UserRepository;
@@ -25,20 +25,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(UserDTO userDTO) {
+    public User createUser(CreateUserDTO createUserDTO) {
         User newUser = new User();
-        newUser.setUsername(userDTO.getUsername());
-        newUser.setRole(Role.valueOf(userDTO.getRoleName()));
-        newUser.setEmail(userDTO.getEmail());
+        newUser.setUsername(createUserDTO.getUsername());
+        newUser.setRole(Role.valueOf(createUserDTO.getRoleName()));
+        newUser.setEmail(createUserDTO.getEmail());
         return userRepository.save(newUser);
     }
 
     @Override
-    public User updateUser(Long id, UserDTO userDTO) throws NoSuchElementException {
+    public User updateUser(Long id, CreateUserDTO createUserDTO) throws NoSuchElementException {
         User user = userRepository.findById(id).get();
-        user.setUsername(userDTO.getUsername());
-        user.setRole(Role.valueOf(userDTO.getRoleName()));
-        user.setEmail(userDTO.getEmail());
+        user.setUsername(createUserDTO.getUsername());
+        user.setRole(Role.valueOf(createUserDTO.getRoleName()));
+        user.setEmail(createUserDTO.getEmail());
         return userRepository.save(user);
     }
 

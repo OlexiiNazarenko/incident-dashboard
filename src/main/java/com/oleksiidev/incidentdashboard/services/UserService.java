@@ -1,6 +1,6 @@
 package com.oleksiidev.incidentdashboard.services;
 
-import com.oleksiidev.incidentdashboard.dto.UserDTO;
+import com.oleksiidev.incidentdashboard.dto.CreateUserDTO;
 import com.oleksiidev.incidentdashboard.model.User;
 
 public interface UserService {
@@ -9,9 +9,9 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
-    User createUser(UserDTO userDTO);
+    User createUser(CreateUserDTO createUserDTO);
 
-    User updateUser(Long id, UserDTO userDTO);
+    User updateUser(Long id, CreateUserDTO createUserDTO);
 
     void deleteUser(Long id);
 }

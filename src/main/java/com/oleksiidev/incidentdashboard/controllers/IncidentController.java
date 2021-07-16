@@ -1,6 +1,6 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
-import com.oleksiidev.incidentdashboard.dto.IncidentDTO;
+import com.oleksiidev.incidentdashboard.dto.CreateIncidentDTO;
 import com.oleksiidev.incidentdashboard.model.Incident;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,19 +42,19 @@ public class IncidentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Incident> createIncident(@RequestBody IncidentDTO incidentDTO) {
+    public ResponseEntity<Incident> createIncident(@RequestBody CreateIncidentDTO createIncidentDTO) {
         // TODO: add check for role permission
         return null;
     }
 
     @PutMapping ("/update")
-    public ResponseEntity<Incident> updateIncidentById(@PathVariable Long incidentId, @RequestBody IncidentDTO incidentDTO) {
+    public ResponseEntity<Incident> updateIncidentById(@PathVariable Long incidentId, @RequestBody CreateIncidentDTO createIncidentDTO) {
         // TODO: add check for role permission
         return null;
     }
 
     @DeleteMapping ("/delete")
-    public ResponseEntity<Incident> deleteIncidentById(@PathVariable Long incidentId, @RequestBody IncidentDTO incidentDTO) {
+    public ResponseEntity<Incident> deleteIncidentById(@PathVariable Long incidentId, @RequestBody CreateIncidentDTO createIncidentDTO) {
         // TODO: add check for role permission
         return null;
     }

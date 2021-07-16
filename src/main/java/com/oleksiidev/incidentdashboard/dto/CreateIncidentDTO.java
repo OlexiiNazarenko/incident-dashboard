@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class IncidentDTO {
+public class CreateIncidentDTO {
     private String incidentTypeName;
     private Long userID;
     private long componentID;
