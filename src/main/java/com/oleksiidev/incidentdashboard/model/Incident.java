@@ -14,7 +14,7 @@ import java.util.Date;
 public class Incident {
 
     @Id
-    @GeneratedValue (strategy= GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;
 
     @ManyToOne

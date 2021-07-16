@@ -16,7 +16,7 @@ import java.util.Set;
 public class Component {
 
     @Id
-    @GeneratedValue (strategy= GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;
 
     @Column

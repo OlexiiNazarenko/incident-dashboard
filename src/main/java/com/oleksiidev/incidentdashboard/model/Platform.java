@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class Platform {
 
     @Id
-    @GeneratedValue (strategy= GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;
 
     private String name;

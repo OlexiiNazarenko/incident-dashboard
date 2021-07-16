@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 public class Service {
 
     @Id
-    @GeneratedValue (strategy= GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;
 
     private String name;
