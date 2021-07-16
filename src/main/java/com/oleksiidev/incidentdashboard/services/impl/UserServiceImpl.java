@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    @Override
     public User createUser(UserDTO userDTO) {
         User newUser = new User();
         newUser.setUsername(userDTO.getUsername());
