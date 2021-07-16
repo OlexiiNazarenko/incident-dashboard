@@ -43,17 +43,19 @@ public class IncidentController {
 
     @PostMapping("/create")
     public ResponseEntity<Incident> createIncident(@RequestBody IncidentDTO incidentDTO) {
-
+        // TODO: add check for role permission
         return null;
     }
 
     @PutMapping ("/update")
     public ResponseEntity<Incident> updateIncidentById(@PathVariable Long incidentId, @RequestBody IncidentDTO incidentDTO) {
+        // TODO: add check for role permission
         return null;
     }
 
     @DeleteMapping ("/delete")
     public ResponseEntity<Incident> deleteIncidentById(@PathVariable Long incidentId, @RequestBody IncidentDTO incidentDTO) {
+        // TODO: add check for role permission
         return null;
     }
 }

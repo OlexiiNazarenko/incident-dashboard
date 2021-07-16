@@ -29,17 +29,19 @@ public class UserController {
 
     @PostMapping ("/create")
     public ResponseEntity<User> createUser(@RequestBody UserDTO userDTO) {
-
+        // TODO: add check for role permission
         return null;
     }
 
     @PutMapping ("/update")
     public ResponseEntity<User> updateUserById(@PathVariable Long userId, @RequestBody IncidentDTO userDTO) {
+        // TODO: add check for role permission
         return null;
     }
 
     @DeleteMapping ("/delete")
     public ResponseEntity<User> deleteUserById(@PathVariable Long userId, @RequestBody IncidentDTO userDTO) {
+        // TODO: add check for role permission
         return null;
     }
 }
