@@ -2,6 +2,7 @@ package com.oleksiidev.incidentdashboard.model;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,14 +24,19 @@ public class Incident {
     @ManyToOne
     private Component component;
 
+    @Column (name = "UserId")
     @ManyToOne
     private User creator;
 
+    @Column
     private IncidentStatus status;
 
+    @Column
     private String description;
 
+    @Column
     private Date startDate;
 
+    @Column
     private Date endDate;
 }

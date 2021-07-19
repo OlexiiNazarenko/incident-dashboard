@@ -1,6 +1,5 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
-import com.oleksiidev.incidentdashboard.dto.CreateIncidentDTO;
 import com.oleksiidev.incidentdashboard.dto.CreateUserDTO;
 import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.services.UserService;
@@ -28,7 +27,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private Logger logger = LoggerFactory.getLogger(UserController.class);
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping ("/id")
     public ResponseEntity getUserById(@PathVariable @NonNull Long id) {
