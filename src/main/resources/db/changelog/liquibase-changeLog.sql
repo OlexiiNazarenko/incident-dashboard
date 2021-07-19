@@ -1,4 +1,5 @@
---changeset olexii-dev:1
+--liquibase formatted sql
+--changeset olexiidev:create-multiple-tables splitStatements:true endDelimiter:;
 CREATE TABLE IF NOT EXISTS `Component` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `Name` varchar(255) NOT NULL DEFAULT '',
