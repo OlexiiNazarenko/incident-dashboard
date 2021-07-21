@@ -1,5 +1,43 @@
 --liquibase formatted sql
 --changeset olexiidev:create-multiple-tables splitStatements:true endDelimiter:;
+CREATE TABLE IF NOT EXISTS `User` (
+    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+    `Username` varchar(255) NOT NULL DEFAULT '',
+    `Role` enum('ADMIN', 'MANAGER') NOT NULL DEFAULT 'ADMIN',
+    `Email` varchar(255) NOT NULL DEFAULT '',
+    `Password` varchar(255) NOT NULL DEFAULT '',
+    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `Region` (
+    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+    `Name` varchar(255) NOT NULL DEFAULT '',
+    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `Platform` (
+    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+    `Name` varchar(255) NOT NULL DEFAULT '',
+    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `Service` (
+    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+    `Name` varchar(255) NOT NULL DEFAULT '',
+    `PlatformID` bigint(20) NOT NULL DEFAULT '0',
+    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`ID`),
+    KEY `fk_service_platformid` (`PlatformID`),
+    CONSTRAINT `fk_service_platformid` FOREIGN KEY (`PlatformID`) REFERENCES `Platform` (`ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `Component` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `Name` varchar(255) NOT NULL DEFAULT '',
@@ -24,6 +62,14 @@ CREATE TABLE IF NOT EXISTS `ComponentRegionDetails` (
     CONSTRAINT `fk_componentregiondetails_regionid` FOREIGN KEY (`RegionID`) REFERENCES `Region` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `IncidentType` (
+    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+    `Name` varchar(255) NOT NULL DEFAULT '',
+    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `Incident` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `TypeID` bigint(20) DEFAULT NULL,
@@ -42,50 +88,4 @@ CREATE TABLE IF NOT EXISTS `Incident` (
     CONSTRAINT `fk_incident_incidenttypeid` FOREIGN KEY (`TypeID`) REFERENCES `IncidentType` (`ID`),
     CONSTRAINT `fk_incident_userid` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`),
     CONSTRAINT `fk_incident_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `Component` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `IncidentType` (
-    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
-    `Name` varchar(255) NOT NULL DEFAULT '',
-    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `Platform` (
-    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
-    `Name` varchar(255) NOT NULL DEFAULT '',
-    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `Region` (
-    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
-    `Name` varchar(255) NOT NULL DEFAULT '',
-    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `Service` (
-    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
-    `Name` varchar(255) NOT NULL DEFAULT '',
-    `PlatformID` bigint(20) NOT NULL DEFAULT '0',
-    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`ID`),
-    KEY `fk_service_platformid` (`PlatformID`),
-    CONSTRAINT `fk_service_platformid` FOREIGN KEY (`PlatformID`) REFERENCES `Platform` (`ID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `User` (
-    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
-    `Username` varchar(255) NOT NULL DEFAULT '',
-    `Role` enum('ADMIN', 'MANAGER') NOT NULL DEFAULT 'ADMIN',
-    `Email` varchar(255) NOT NULL DEFAULT '',
-    `Password` varchar(255) NOT NULL DEFAULT '',
-    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
