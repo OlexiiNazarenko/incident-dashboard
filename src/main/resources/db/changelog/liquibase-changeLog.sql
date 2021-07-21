@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset olexiidev:create-multiple-tables splitStatements:true endDelimiter:;
+--changeset olexiidev:create-initial-database splitStatements:true endDelimiter:;
 CREATE TABLE IF NOT EXISTS `User` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `Username` varchar(255) NOT NULL DEFAULT '',
