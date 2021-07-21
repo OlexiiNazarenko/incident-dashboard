@@ -24,7 +24,6 @@ public class Incident {
     @ManyToOne
     private Component component;
 
-    @Column (name = "UserId")
     @ManyToOne
     private User creator;
 

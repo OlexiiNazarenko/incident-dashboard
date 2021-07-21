@@ -22,11 +22,9 @@ public class Component {
     @Column
     private String name;
 
-    @Column
     @ManyToOne
     private Service service;
 
-    @Column
     @ManyToMany
     private Set<Region> regions;
 }
