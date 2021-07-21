@@ -3,11 +3,7 @@ package com.oleksiidev.incidentdashboard.controllers;
 import com.oleksiidev.incidentdashboard.dto.CreateUserDTO;
 import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.services.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,78 +12,44 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.NoSuchElementException;
+import java.util.List;
 
-
+@RequiredArgsConstructor
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private final UserService userService;
 
     @GetMapping ("/id")
-    public ResponseEntity getUserById(@PathVariable @NonNull Long id) {
-        try {
-            User user = userService.getUserById(id);
-            return new ResponseEntity(user, HttpStatus.OK);
-        } catch (NoSuchElementException nse) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            logger.error("An error occurred during GET request to /id: ", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public User getUserById(@PathVariable @NonNull Long id) {
+        return userService.getUserById(id);
+    }
+
+    @GetMapping("/all")
+    public List<User> getUsers() {
+        return userService.getAllUsers();
     }
 
     @GetMapping("/email")
-    public ResponseEntity getUserByEmail(@RequestBody String email) {
-        try {
-            User user = userService.getUserByEmail(email);
-            return new ResponseEntity(user, HttpStatus.OK);
-        } catch (NoSuchElementException nse) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            logger.error("An error occurred during GET request to /email", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public User getUserByEmail(@RequestBody String email) {
+        return userService.getUserByEmail(email);
     }
 
     @PostMapping ("/create")
-    public ResponseEntity createUser(@RequestBody CreateUserDTO createUserDTO) {
-        // TODO: add check for role permission
-        try {
-            User user = userService.createUser(createUserDTO);
-            return new ResponseEntity(user, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("An error occurred during POST request to /create: ", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public User createUser(@RequestBody CreateUserDTO createUserDTO) {
+        return userService.createUser(createUserDTO);
     }
 
-    @PutMapping ("/update")
-    public ResponseEntity updateUserById(@PathVariable Long userId, @RequestBody CreateUserDTO createUserDTO) {
-        // TODO: add check for role permission
-        try {
-            User user = userService.updateUser(userId, createUserDTO);
-            return new ResponseEntity(user, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("An error occurred during PUT request to /update: ", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PutMapping ("/update/id/{userId}")
+    public User updateUserById(@PathVariable Long userId, @RequestBody CreateUserDTO createUserDTO) {
+        return userService.updateUser(userId, createUserDTO);
     }
 
-    @DeleteMapping ("/delete")
-    public ResponseEntity deleteUserById(@PathVariable Long userId) {
-        // TODO: add check for role permission
-        try {
-            userService.deleteUser(userId);
-            return new ResponseEntity(HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("An error occurred during DELETE request to /update: ", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @DeleteMapping ("/delete/id{userId}")
+    public void deleteUserById(@PathVariable Long userId) {
+        userService.deleteUser(userId);
     }
 }

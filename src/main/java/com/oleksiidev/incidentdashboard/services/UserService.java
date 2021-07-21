@@ -29,6 +29,7 @@ public class UserService {
     }
 
     public User createUser(CreateUserDTO createUserDTO) {
+        // TODO: add check for role permission; move to service
         User newUser = new User();
         newUser.setUsername(createUserDTO.getUsername());
         newUser.setRole(Role.valueOf(createUserDTO.getRoleName()));
@@ -37,6 +38,7 @@ public class UserService {
     }
 
     public User updateUser(Long id, CreateUserDTO createUserDTO) throws NoSuchElementException {
+        // TODO: add check for role permission; move to service
         User user = userRepository.findUserById(id);
         user.setUsername(createUserDTO.getUsername());
         user.setRole(Role.valueOf(createUserDTO.getRoleName()));
@@ -45,6 +47,7 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
+        // TODO: add check for role permission; move to service
         userRepository.deleteById(id);
     }
 }

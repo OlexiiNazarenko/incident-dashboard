@@ -36,15 +36,17 @@ public class IncidentService {
     }
 
     public Incident createIncident(CreateIncidentDTO createIncidentDTO) {
+        // TODO: add check for role permission
         Incident newIncident = new Incident();
         return null;
     }
 
     public Incident updateIncident(Long id, CreateIncidentDTO createIncidentDTO) {
+        // TODO: add check for role permission
         return null;
     }
 
     public void deleteIncident(Long id) {
-
+        // TODO: add check for role permission
     }
 }
