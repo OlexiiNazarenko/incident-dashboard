@@ -1,6 +1,6 @@
 --liquibase formatted sql
 --changeset olexiidev:create-initial-database splitStatements:true endDelimiter:;
-CREATE TABLE IF NOT EXISTS `User` (
+CREATE TABLE IF NOT EXISTS `USER` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `Username` varchar(255) NOT NULL DEFAULT '',
     `Role` enum('ADMIN', 'MANAGER') NOT NULL DEFAULT 'ADMIN',
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `User` (
     PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `Region` (
+CREATE TABLE IF NOT EXISTS `REGION` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `Name` varchar(255) NOT NULL DEFAULT '',
     `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `Region` (
     PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `Platform` (
+CREATE TABLE IF NOT EXISTS `PLATFORM` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `Name` varchar(255) NOT NULL DEFAULT '',
     `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `Platform` (
     PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `Service` (
+CREATE TABLE IF NOT EXISTS `SERVICE` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `Name` varchar(255) NOT NULL DEFAULT '',
     `PlatformID` bigint(20) NOT NULL DEFAULT '0',
@@ -35,10 +35,10 @@ CREATE TABLE IF NOT EXISTS `Service` (
     `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`ID`),
     KEY `fk_service_platformid` (`PlatformID`),
-    CONSTRAINT `fk_service_platformid` FOREIGN KEY (`PlatformID`) REFERENCES `Platform` (`ID`) ON DELETE CASCADE
+    CONSTRAINT `fk_service_platformid` FOREIGN KEY (`PlatformID`) REFERENCES `PLATFORM` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `Component` (
+CREATE TABLE IF NOT EXISTS `COMPONENT` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `Name` varchar(255) NOT NULL DEFAULT '',
     `ServiceID` bigint(20) NOT NULL DEFAULT '0',
@@ -46,10 +46,10 @@ CREATE TABLE IF NOT EXISTS `Component` (
     `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`ID`),
     KEY `fk_component_serviceid` (`ServiceID`),
-    CONSTRAINT `fk_component_serviceid` FOREIGN KEY (`ServiceID`) REFERENCES `Service` (`ID`) ON DELETE CASCADE
+    CONSTRAINT `fk_component_serviceid` FOREIGN KEY (`ServiceID`) REFERENCES `SERVICE` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `ComponentRegionDetails` (
+CREATE TABLE IF NOT EXISTS `COMPONENT_REGIONS` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `ComponentID` bigint(20) NOT NULL,
     `RegionID` bigint(20) DEFAULT NULL,
@@ -58,11 +58,11 @@ CREATE TABLE IF NOT EXISTS `ComponentRegionDetails` (
     PRIMARY KEY (`ID`),
     UNIQUE KEY `fk_componentregiondetails_componentid` (`ComponentID`),
     KEY `fk_componentregiondetails_regionid` (`RegionID`),
-    CONSTRAINT `fk_componentregiondetails_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `Component` (`ID`) ON DELETE CASCADE,
-    CONSTRAINT `fk_componentregiondetails_regionid` FOREIGN KEY (`RegionID`) REFERENCES `Region` (`ID`)
+    CONSTRAINT `fk_componentregiondetails_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `COMPONENT` (`ID`) ON DELETE CASCADE,
+    CONSTRAINT `fk_componentregiondetails_regionid` FOREIGN KEY (`RegionID`) REFERENCES `REGION` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `IncidentType` (
+CREATE TABLE IF NOT EXISTS `INCIDENT_TYPE` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `Name` varchar(255) NOT NULL DEFAULT '',
     `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `IncidentType` (
     PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `Incident` (
+CREATE TABLE IF NOT EXISTS `INCIDENT` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `TypeID` bigint(20) DEFAULT NULL,
     `UserID` bigint(20) DEFAULT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `Incident` (
     KEY `fk_incident_incidenttypeid` (`TypeID`),
     KEY `fk_incident_userid` (`UserID`),
     KEY `fk_incident_componentid` (`ComponentID`),
-    CONSTRAINT `fk_incident_incidenttypeid` FOREIGN KEY (`TypeID`) REFERENCES `IncidentType` (`ID`),
-    CONSTRAINT `fk_incident_userid` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`),
-    CONSTRAINT `fk_incident_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `Component` (`ID`)
+    CONSTRAINT `fk_incident_incidenttypeid` FOREIGN KEY (`TypeID`) REFERENCES `INCIDENT_TYPE` (`ID`),
+    CONSTRAINT `fk_incident_userid` FOREIGN KEY (`UserID`) REFERENCES `USER` (`ID`),
+    CONSTRAINT `fk_incident_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `COMPONENT` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
