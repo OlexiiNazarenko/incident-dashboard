@@ -10,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Data
 @Entity
@@ -28,4 +30,7 @@ public class Service {
     @ManyToOne
     @JoinColumn(name = "PlatformID")
     private Platform platform;
+
+    @OneToMany(mappedBy = "service")
+    private List<Component> components;
 }
