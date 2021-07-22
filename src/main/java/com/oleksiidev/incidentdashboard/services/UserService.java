@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -37,12 +36,13 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public User updateUser(Long id, CreateUserDTO createUserDTO) throws NoSuchElementException {
+    public User updateUser(Long id, CreateUserDTO createUserDTO) {
         // TODO: add check for role permission; move to service
         User user = userRepository.findUserById(id);
         user.setUsername(createUserDTO.getUsername());
         user.setRole(Role.valueOf(createUserDTO.getRoleName()));
         user.setEmail(createUserDTO.getEmail());
+        // TODO: Generate default password and send an email to change password to the user
         return userRepository.save(user);
     }
 
