@@ -33,10 +33,6 @@ public class Subscription {
     private Service service;
 
     @ManyToOne
-    @JoinColumn(name = "ComponentID")
-    private Component component;
-
-    @ManyToOne
     @JoinColumn(name = "IncidentTypeID")
     private IncidentType incidentType;
 

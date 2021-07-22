@@ -74,7 +74,6 @@ CREATE TABLE IF NOT EXISTS `INCIDENT` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `TypeID` bigint(20) DEFAULT NULL,
     `UserID` bigint(20) DEFAULT NULL,
-    `ComponentID` bigint(20) DEFAULT NULL,
     `Description` text,
     `StartDate` timestamp,
     `EndDate` timestamp,
@@ -84,10 +83,8 @@ CREATE TABLE IF NOT EXISTS `INCIDENT` (
     PRIMARY KEY (`ID`),
     KEY `fk_incident_incidenttypeid` (`TypeID`),
     KEY `fk_incident_userid` (`UserID`),
-    KEY `fk_incident_componentid` (`ComponentID`),
     CONSTRAINT `fk_incident_incidenttypeid` FOREIGN KEY (`TypeID`) REFERENCES `INCIDENT_TYPE` (`ID`),
     CONSTRAINT `fk_incident_userid` FOREIGN KEY (`UserID`) REFERENCES `USER` (`ID`),
-    CONSTRAINT `fk_incident_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `COMPONENT` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `SUBSCRIPTION` (
