@@ -1,6 +1,6 @@
 package com.oleksiidev.incidentdashboard.services;
 
-import com.oleksiidev.incidentdashboard.dto.CreateUserDTO;
+import com.oleksiidev.incidentdashboard.dto.UserDTO;
 import com.oleksiidev.incidentdashboard.model.Role;
 import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.repositories.UserRepository;
@@ -27,21 +27,21 @@ public class UserService {
         return userRepository.findUserByEmail(email);
     }
 
-    public User createUser(CreateUserDTO createUserDTO) {
+    public User createUser(UserDTO userDTO) {
         // TODO: add check for role permission; move to service
         User newUser = new User();
-        newUser.setUsername(createUserDTO.getUsername());
-        newUser.setRole(Role.valueOf(createUserDTO.getRoleName()));
-        newUser.setEmail(createUserDTO.getEmail());
+        newUser.setUsername(userDTO.getUsername());
+        newUser.setRole(Role.valueOf(userDTO.getRoleName()));
+        newUser.setEmail(userDTO.getEmail());
         return userRepository.save(newUser);
     }
 
-    public User updateUser(Long id, CreateUserDTO createUserDTO) {
+    public User updateUser(Long id, UserDTO userDTO) {
         // TODO: add check for role permission; move to service
         User user = userRepository.findUserById(id);
-        user.setUsername(createUserDTO.getUsername());
-        user.setRole(Role.valueOf(createUserDTO.getRoleName()));
-        user.setEmail(createUserDTO.getEmail());
+        user.setUsername(userDTO.getUsername());
+        user.setRole(Role.valueOf(userDTO.getRoleName()));
+        user.setEmail(userDTO.getEmail());
         // TODO: Generate default password and send an email to change password to the user
         return userRepository.save(user);
     }

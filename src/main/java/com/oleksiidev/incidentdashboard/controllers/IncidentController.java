@@ -1,6 +1,6 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
-import com.oleksiidev.incidentdashboard.dto.CreateIncidentDTO;
+import com.oleksiidev.incidentdashboard.dto.IncidentDTO;
 import com.oleksiidev.incidentdashboard.model.Incident;
 import com.oleksiidev.incidentdashboard.services.IncidentService;
 import lombok.RequiredArgsConstructor;
@@ -48,13 +48,13 @@ public class IncidentController {
     }
 
     @PostMapping("/create")
-    public Incident createIncident(@RequestBody CreateIncidentDTO createIncidentDTO) {
-        return incidentService.createIncident(createIncidentDTO);
+    public Incident createIncident(@RequestBody IncidentDTO incidentDTO) {
+        return incidentService.createIncident(incidentDTO);
     }
 
     @PutMapping ("/update/id/{incidentId}")
-    public Incident updateIncidentById(@PathVariable Long incidentId, @RequestBody CreateIncidentDTO createIncidentDTO) {
-        return incidentService.updateIncident(incidentId, createIncidentDTO);
+    public Incident updateIncidentById(@PathVariable Long incidentId, @RequestBody IncidentDTO incidentDTO) {
+        return incidentService.updateIncident(incidentId, incidentDTO);
     }
 
     @DeleteMapping ("/delete/id/{incidentId}")

@@ -1,6 +1,6 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
-import com.oleksiidev.incidentdashboard.dto.CreateUserDTO;
+import com.oleksiidev.incidentdashboard.dto.UserDTO;
 import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -39,13 +39,13 @@ public class UserController {
     }
 
     @PostMapping ("/create")
-    public User createUser(@RequestBody CreateUserDTO createUserDTO) {
-        return userService.createUser(createUserDTO);
+    public User createUser(@RequestBody UserDTO userDTO) {
+        return userService.createUser(userDTO);
     }
 
     @PutMapping ("/update/id/{userId}")
-    public User updateUserById(@PathVariable Long userId, @RequestBody CreateUserDTO createUserDTO) {
-        return userService.updateUser(userId, createUserDTO);
+    public User updateUserById(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+        return userService.updateUser(userId, userDTO);
     }
 
     @DeleteMapping ("/delete/id/{userId}")

@@ -1,6 +1,6 @@
 package com.oleksiidev.incidentdashboard.services;
 
-import com.oleksiidev.incidentdashboard.dto.CreateIncidentDTO;
+import com.oleksiidev.incidentdashboard.dto.IncidentDTO;
 import com.oleksiidev.incidentdashboard.model.Incident;
 import com.oleksiidev.incidentdashboard.model.IncidentStatus;
 import com.oleksiidev.incidentdashboard.repositories.IncidentRepository;
@@ -35,13 +35,13 @@ public class IncidentService {
         return incidentRepository.findIncidentsByComponent_Id(componentId);
     }
 
-    public Incident createIncident(CreateIncidentDTO createIncidentDTO) {
+    public Incident createIncident(IncidentDTO incidentDTO) {
         // TODO: add check for role permission
         Incident newIncident = new Incident();
         return null;
     }
 
-    public Incident updateIncident(Long id, CreateIncidentDTO createIncidentDTO) {
+    public Incident updateIncident(Long id, IncidentDTO incidentDTO) {
         // TODO: add check for role permission
         return null;
     }
