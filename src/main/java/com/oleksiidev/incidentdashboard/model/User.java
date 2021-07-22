@@ -17,14 +17,14 @@ import javax.persistence.Table;
 public class User {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long id;
 
     @Column(name = "Username")
     private String username;
 
-    @Column(name = "Role")
+    @Column(name = "Role", columnDefinition="ENUM('ADMIN', 'MANAGER')")
     @Enumerated(EnumType.STRING)
     private Role role;
 

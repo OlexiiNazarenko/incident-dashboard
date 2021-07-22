@@ -20,7 +20,7 @@ import java.util.Date;
 public class Incident {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long id;
 
@@ -36,11 +36,11 @@ public class Incident {
     @JoinColumn(name = "UserID")
     private User creator;
 
-    @Column(name = "Status")
+    @Column(name = "Status", columnDefinition="ENUM('OPEN','CLOSED')")
     @Enumerated(EnumType.STRING)
     private IncidentStatus status;
 
-    @Column(name = "Description")
+    @Column(name = "Description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "StartDate")
