@@ -34,8 +34,8 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping()
-    public User getUserByEmail(@RequestParam String email) {
+    @GetMapping("/email")
+    public User getUserByEmail(@RequestBody String email) {
         return userService.getUserByEmail(email);
     }
 
