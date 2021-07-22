@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,19 +40,19 @@ public class ServiceController {
 
     @PostMapping("/create")
     public Service createService(@RequestParam @NonNull Long platformId,
-                                 @RequestParam String serviceName) {
+                                 @RequestBody String serviceName) {
         return serviceService.createService(platformId, serviceName);
     }
 
-    @PatchMapping("/update/{id}/name")
+    @PatchMapping("/update/{id}")
     public Service updateServiceName(@PathVariable @NonNull Long id,
-                                     @RequestParam String name) {
+                                     @RequestBody String name) {
         return serviceService.updateServiceName(id, name);
     }
 
-    @PatchMapping("/update/{serviceId}/platformId/{platformId}")
+    @PatchMapping("/update/{serviceId}")
     public Service updateServicePlatform(@PathVariable @NonNull Long serviceId,
-                                         @PathVariable @NonNull Long platformId) {
+                                         @RequestParam @NonNull Long platformId) {
         return serviceService.changeServicePlatform(serviceId, platformId);
     }
 

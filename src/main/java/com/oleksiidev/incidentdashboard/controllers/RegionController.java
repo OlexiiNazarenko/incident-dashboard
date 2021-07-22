@@ -34,17 +34,17 @@ public class RegionController {
     }
 
     @PostMapping("/create")
-    public Region createRegion(@RequestParam @NonNull String name) {
+    public Region createRegion(@RequestBody @NonNull String name) {
         return regionService.createRegion(name);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/id/{id}")
     public Region updateregionName(@PathVariable @NonNull Long id,
                                    @RequestParam String newName) {
         return regionService.updateRegionName(id, newName);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/id/{id}")
     public void deleteRegion(@PathVariable @NonNull Long id) {
         regionService.deleteRegion(id);
     }

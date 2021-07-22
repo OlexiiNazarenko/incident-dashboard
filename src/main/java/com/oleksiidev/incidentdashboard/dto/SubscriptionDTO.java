@@ -7,7 +7,6 @@ import java.util.List;
 @Data
 public class SubscriptionDTO {
 
-    private Long id;
     private String email;
     private Long platformId;
     private List<Long> serviceIds;
