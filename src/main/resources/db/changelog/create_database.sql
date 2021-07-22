@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `INCIDENT` (
     KEY `fk_incident_incidenttypeid` (`TypeID`),
     KEY `fk_incident_userid` (`UserID`),
     CONSTRAINT `fk_incident_incidenttypeid` FOREIGN KEY (`TypeID`) REFERENCES `INCIDENT_TYPE` (`ID`),
-    CONSTRAINT `fk_incident_userid` FOREIGN KEY (`UserID`) REFERENCES `USER` (`ID`),
+    CONSTRAINT `fk_incident_userid` FOREIGN KEY (`UserID`) REFERENCES `USER` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `SUBSCRIPTION` (
@@ -96,7 +96,6 @@ CREATE TABLE IF NOT EXISTS `SUBSCRIPTION` (
     `IncidentTypeID` bigint(20) DEFAULT NULL,
     `RegionID` bigint(20) DEFAULT NULL,
     `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`ID`),
     KEY `fk_subscrription_platformid` (`PlatformID`),
     KEY `fk_subscrription_serviceid` (`ServiceID`),
