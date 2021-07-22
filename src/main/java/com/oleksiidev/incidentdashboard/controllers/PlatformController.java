@@ -37,12 +37,13 @@ public class PlatformController {
         return platformService.createPlatform(name);
     }
 
-    @PutMapping("/update/{id}")
-    public Platform updatePlatform(@PathVariable @NonNull Long id, @RequestBody String name) {
+    @PutMapping("/update/id/{id}")
+    public Platform updatePlatform(@PathVariable @NonNull Long id,
+                                   @RequestBody String name) {
         return platformService.updatePlatform(id, name);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/id/{id}")
     public void deletePlatform(@PathVariable @NonNull Long id) {
         platformService.deletePlatform(id);
     }
