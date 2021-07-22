@@ -89,3 +89,26 @@ CREATE TABLE IF NOT EXISTS `INCIDENT` (
     CONSTRAINT `fk_incident_userid` FOREIGN KEY (`UserID`) REFERENCES `USER` (`ID`),
     CONSTRAINT `fk_incident_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `COMPONENT` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `SUBSCRIPTION` (
+    `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+    `Email` varchar(255) NOT NULL DEFAULT '',
+    `PlatformID` bigint(20) DEFAULT NULL,
+    `ServiceID` bigint(20) DEFAULT NULL,
+    `ComponentID` bigint(20) DEFAULT NULL,
+    `IncidentTypeID` bigint(20) DEFAULT NULL,
+    `RegionID` bigint(20) DEFAULT NULL,
+    `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`ID`),
+    KEY `fk_subscrription_platformid` (`PlatformID`),
+    KEY `fk_subscrription_serviceid` (`ServiceID`),
+    KEY `fk_subscrription_componentid` (`ComponentID`),
+    KEY `fk_subscrription_incidenttypeid` (`IncidentTypeID`),
+    KEY `fk_subscrription_regionid` (`RegionID`),
+    CONSTRAINT `fk_subscrription_platformid` FOREIGN KEY (`PlatformID`) REFERENCES `PLATFORM` (`ID`),
+    CONSTRAINT `fk_subscrription_serviceid` FOREIGN KEY (`ServiceID`) REFERENCES `SERVICE` (`ID`),
+    CONSTRAINT `fk_subscrription_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `COMPONENT` (`ID`),
+    CONSTRAINT `fk_subscrription_incidenttypeid` FOREIGN KEY (`IncidentTypeID`) REFERENCES `INCIDENT_TYPE` (`ID`),
+    CONSTRAINT `fk_subscrription_regionid` FOREIGN KEY (`RegionID`) REFERENCES `REGION` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
