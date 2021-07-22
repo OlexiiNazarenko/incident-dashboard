@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface IncidentRepository extends CrudRepository<Incident, Long> {
 
-    Incident findIncidentById(long id);
+    Incident findIncidentById(Long id);
 
     Incident findIncidentByType(IncidentType type);
 
