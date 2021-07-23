@@ -1,5 +1,6 @@
 package com.oleksiidev.incidentdashboard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -29,13 +30,14 @@ public class Component {
 
     @ManyToOne
     @JoinColumn(name = "ServiceID")
+    @JsonBackReference
     private Service service;
 
     @ManyToMany
     @JoinTable(
             name = "COMPONENT_REGIONS",
-            joinColumns = @JoinColumn(name = "RegionID"),
-            inverseJoinColumns = @JoinColumn(name = "ComponentID")
+            joinColumns = @JoinColumn(name = "ComponentID"),
+            inverseJoinColumns = @JoinColumn(name = "RegionID")
     )
     private Set<Region> regions;
 }
