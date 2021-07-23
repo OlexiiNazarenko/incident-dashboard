@@ -1,5 +1,7 @@
 package com.oleksiidev.incidentdashboard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -29,8 +31,10 @@ public class Service {
 
     @ManyToOne
     @JoinColumn(name = "PlatformID")
+    @JsonBackReference
     private Platform platform;
 
     @OneToMany(mappedBy = "service")
+    @JsonManagedReference
     private List<Component> components;
 }
