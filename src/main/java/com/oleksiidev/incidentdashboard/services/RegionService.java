@@ -5,7 +5,8 @@ import com.oleksiidev.incidentdashboard.repositories.RegionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -17,8 +18,10 @@ public class RegionService {
         return regionRepository.findRegionById(id);
     }
 
-    public List<Region> getAllRegions() {
-        return (List<Region>) regionRepository.findAll();
+    public Set<Region> getAllRegions() {
+        Set<Region> regions = new HashSet<>();
+        regionRepository.findAll().forEach(regions::add);
+        return regions;
     }
 
     public Region createRegion(String name) {
