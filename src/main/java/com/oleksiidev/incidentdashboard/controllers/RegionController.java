@@ -21,7 +21,7 @@ import java.util.Set;
 @RequestMapping("/region")
 public class RegionController {
 
-    private RegionService regionService;
+    private final RegionService regionService;
 
     @GetMapping("/id/{id}")
     public Region getRegionById(@PathVariable @NonNull Long id) {
@@ -30,7 +30,7 @@ public class RegionController {
 
     @GetMapping("/all")
     public Set<Region> getAllRegions() {
-        return (Set<Region>) regionService.getAllRegions();
+        return regionService.getAllRegions();
     }
 
     @PostMapping("/create")
