@@ -16,6 +16,4 @@ public interface IncidentRepository extends CrudRepository<Incident, Long> {
     Incident findIncidentByType(IncidentType type);
 
     List<Incident> findIncidentsByStatus(IncidentStatus status);
-
-    List<Incident> findIncidentsByComponent_Id(Long id);
 }

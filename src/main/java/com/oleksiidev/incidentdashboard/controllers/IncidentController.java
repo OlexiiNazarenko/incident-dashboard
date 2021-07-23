@@ -42,11 +42,6 @@ public class IncidentController {
         return incidentService.getIncidentsByServiceId(serviceId);
     }
 
-    @GetMapping("/componentId/{componentId}")
-    public List<Incident> getIncidentsByComponentId(@PathVariable Long componentId) {
-        return incidentService.getIncidentsByComponentId(componentId);
-    }
-
     @PostMapping("/create")
     public Incident createIncident(@RequestBody IncidentDTO incidentDTO) {
         return incidentService.createIncident(incidentDTO);

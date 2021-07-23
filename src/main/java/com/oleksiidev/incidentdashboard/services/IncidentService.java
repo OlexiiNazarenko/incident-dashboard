@@ -31,10 +31,6 @@ public class IncidentService {
         return null;
     }
 
-    public List<Incident> getIncidentsByComponentId(Long componentId) {
-        return incidentRepository.findIncidentsByComponent_Id(componentId);
-    }
-
     public Incident createIncident(IncidentDTO incidentDTO) {
         // TODO: add check for role permission
         Incident newIncident = new Incident();
