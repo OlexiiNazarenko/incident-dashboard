@@ -29,10 +29,6 @@ public class Incident {
     private IncidentType type;
 
     @ManyToOne
-    @JoinColumn(name = "ComponentID")
-    private Component component;
-
-    @ManyToOne
     @JoinColumn(name = "UserID")
     private User creator;
 
