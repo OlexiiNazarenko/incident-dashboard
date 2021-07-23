@@ -56,8 +56,7 @@ CREATE TABLE IF NOT EXISTS `COMPONENT_REGIONS` (
     `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`ID`),
-    UNIQUE KEY `fk_componentregiondetails_componentid` (`ComponentID`),
-    KEY `fk_componentregiondetails_regionid` (`RegionID`),
+    UNIQUE KEY `fk_componentregiondetails_componentid_regionid` (`ComponentID`, `RegionID`),
     CONSTRAINT `fk_componentregiondetails_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `COMPONENT` (`ID`) ON DELETE CASCADE,
     CONSTRAINT `fk_componentregiondetails_regionid` FOREIGN KEY (`RegionID`) REFERENCES `REGION` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
