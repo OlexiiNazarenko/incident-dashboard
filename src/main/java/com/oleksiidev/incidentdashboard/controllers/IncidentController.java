@@ -17,7 +17,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/incident")
+@RequestMapping("/api/incident")
 public class IncidentController {
 
     private final IncidentService incidentService;

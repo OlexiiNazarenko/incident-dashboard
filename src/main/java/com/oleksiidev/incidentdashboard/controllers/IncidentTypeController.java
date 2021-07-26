@@ -19,7 +19,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping ("/incident_type")
+@RequestMapping ("/api/incident_type")
 public class IncidentTypeController {
 
     private final IncidentTypeService incidentTypeService;

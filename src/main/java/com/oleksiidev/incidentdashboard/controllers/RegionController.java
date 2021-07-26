@@ -18,7 +18,7 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/region")
+@RequestMapping("/api/region")
 public class RegionController {
 
     private final RegionService regionService;

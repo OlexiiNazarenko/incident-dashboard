@@ -17,7 +17,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/platform")
+@RequestMapping("/api/platform")
 public class PlatformController {
 
     private final PlatformService platformService;

@@ -18,7 +18,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/component")
+@RequestMapping("/api/component")
 public class ComponentController {
 
     private final ComponentService componentService;
