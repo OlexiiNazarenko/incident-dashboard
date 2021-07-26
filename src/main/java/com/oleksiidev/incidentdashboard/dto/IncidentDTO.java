@@ -6,9 +6,9 @@ import java.util.Date;
 
 @Data
 public class IncidentDTO {
-    private String incidentTypeName;
+    private Long incidentTypeId;
     private Long userID;
-    private long componentID;
+    private long componentId;
     private String status;
     private String description;
     private Date startDate;

@@ -22,7 +22,7 @@ public class ComponentService {
     }
 
     public List<Component> getAllComponents() {
-        return (List<Component>) componentRepository.findAll();
+        return componentRepository.findAll();
     }
 
     public List<Component> getComponentsByServiceId(Long serviceId) {
