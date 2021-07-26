@@ -3,7 +3,7 @@
 CREATE TABLE IF NOT EXISTS `USER` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `Username` varchar(255) NOT NULL DEFAULT '',
-    `Role` enum('ADMIN', 'MANAGER') NOT NULL DEFAULT 'ADMIN',
+    `Role` enum('ROLE_ADMIN', 'ROLE_MANAGER') NOT NULL DEFAULT 'ROLE_ADMIN',
     `Email` varchar(255) NOT NULL DEFAULT '',
     `Password` varchar(255) NOT NULL DEFAULT '',
     `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

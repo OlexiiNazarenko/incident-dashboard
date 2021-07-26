@@ -24,7 +24,7 @@ public class User {
     @Column(name = "Username")
     private String username;
 
-    @Column(name = "Role", columnDefinition="ENUM('ADMIN', 'MANAGER')")
+    @Column(name = "Role", columnDefinition="ENUM('ROLE_ADMIN', 'ROLE_MANAGER')")
     @Enumerated(EnumType.STRING)
     private Role role;
 
