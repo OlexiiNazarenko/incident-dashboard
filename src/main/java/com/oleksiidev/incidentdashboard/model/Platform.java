@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class Platform {
     @Column(name = "Name")
     private String name;
 
-    @OneToMany (mappedBy = "platform")
+    @OneToMany (mappedBy = "platform", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Service> services;
 }
