@@ -18,7 +18,7 @@ public class IncidentTypeService {
     }
 
     public List<IncidentType> getAllIncidentTypes() {
-        return (List<IncidentType>) incidentTypeRepository.findAll();
+        return incidentTypeRepository.findAll();
     }
 
     public IncidentType createIncidentType(String name) {

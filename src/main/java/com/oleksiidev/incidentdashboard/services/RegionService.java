@@ -19,9 +19,7 @@ public class RegionService {
     }
 
     public Set<Region> getAllRegions() {
-        Set<Region> regions = new HashSet<>();
-        regionRepository.findAll().forEach(regions::add);
-        return regions;
+        return new HashSet<>(regionRepository.findAll());
     }
 
     public Region createRegion(String name) {

@@ -14,7 +14,7 @@ public class ServiceService {
     private final PlatformService platformService;
 
     public List<Service> getAllServices() {
-        return (List<Service>) serviceRepository.findAll();
+        return serviceRepository.findAll();
     }
 
     public Service getServiceById(Long id) {

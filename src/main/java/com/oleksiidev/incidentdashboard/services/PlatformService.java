@@ -18,7 +18,7 @@ public class PlatformService {
     }
 
     public List<Platform> getAllPlatforms() {
-        return (List<Platform>) platformRepository.findAll();
+        return platformRepository.findAll();
     }
 
     public Platform createPlatform(String platformName) {
