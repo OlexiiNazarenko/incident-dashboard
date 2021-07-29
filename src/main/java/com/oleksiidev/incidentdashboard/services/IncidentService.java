@@ -7,6 +7,7 @@ import com.oleksiidev.incidentdashboard.repositories.IncidentRepository;
 import com.oleksiidev.incidentdashboard.repositories.IncidentTypeRepository;
 import com.oleksiidev.incidentdashboard.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,7 +40,8 @@ public class IncidentService {
     public Incident createIncident(IncidentDTO incidentDTO) {
         // TODO: add check for role permission
         Incident newIncident = new Incident();
-        newIncident.setCreator(userRepository.findUserById(incidentDTO.getUserID()));
+        newIncident.setCreator(userRepository.findById(incidentDTO.getUserID())
+                .orElseThrow(() -> new UsernameNotFoundException("No user for id " + incidentDTO.getUserID())));
         newIncident.setDescription(incidentDTO.getDescription());
         newIncident.setType(incidentTypeRepository.findIncidentTypeById(incidentDTO.getIncidentTypeId()));
         newIncident.setStatus(IncidentStatus.valueOf(incidentDTO.getStatus()));
@@ -51,7 +53,8 @@ public class IncidentService {
     public Incident updateIncident(Long id, IncidentDTO incidentDTO) {
         // TODO: add check for role permission
         Incident incident = incidentRepository.findIncidentById(id);
-        incident.setCreator(userRepository.findUserById(incidentDTO.getUserID()));
+        incident.setCreator(userRepository.findById(incidentDTO.getUserID())
+                .orElseThrow(() -> new UsernameNotFoundException("No user for id " + incidentDTO.getUserID())));
         incident.setDescription(incidentDTO.getDescription());
         incident.setType(incidentTypeRepository.findIncidentTypeById(incidentDTO.getIncidentTypeId()));
         incident.setStatus(IncidentStatus.valueOf(incidentDTO.getStatus()));
