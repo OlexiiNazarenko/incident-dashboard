@@ -1,0 +1,21 @@
+version: '2'
+services:
+  incident-dashboard:
+    container_name: incident-dashboard
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: incident-dashboard:latest
+    ports:
+      - 18080:8080
+    networks:
+      - spring-cloud-network
+  mysql:
+    container_name: incident-dashboard-mysql-compose
+    image: mysql/mysql-server
+    ports:
+      - 33061:3306
+    command: docker run --name=incident-dashboard-mysql -p 33061:3306 -e MYSQL_ROOT_PASSWORD='q8=oW5PP5n4%6@Quc,o+t9X8k^i&Dq0V' -e MYSQL_DATABASE='incident-dashboard' -e MYSQL_ROOT_HOST=% -d mysql/mysql-server
+networks:
+  spring-cloud-network:
+    driver: bridge
