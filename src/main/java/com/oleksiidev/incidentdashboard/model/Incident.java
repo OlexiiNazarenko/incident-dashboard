@@ -17,32 +17,32 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "INCIDENT")
+@Table(name = "`INCIDENT`")
 public class Incident {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "`ID`")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TypeID")
+    @JoinColumn(name = "`TypeID`")
     private IncidentType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID")
+    @JoinColumn(name = "`UserID`")
     private User creator;
 
-    @Column(name = "Status", columnDefinition="ENUM('OPEN','CLOSED')")
+    @Column(name = "`Status`", columnDefinition="ENUM('OPEN','CLOSED')")
     @Enumerated(EnumType.STRING)
     private IncidentStatus status;
 
-    @Column(name = "Description", columnDefinition = "TEXT")
+    @Column(name = "`Description`", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "StartDate")
+    @Column(name = "`StartDate`")
     private Date startDate;
 
-    @Column(name = "EndDate")
+    @Column(name = "`EndDate`")
     private Date endDate;
 }

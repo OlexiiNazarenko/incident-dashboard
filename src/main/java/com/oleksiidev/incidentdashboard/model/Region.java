@@ -11,14 +11,14 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "REGION")
+@Table(name = "`REGION`")
 public class Region {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "`ID`")
     private long id;
 
-    @Column(name = "Name")
+    @Column(name = "`Name`")
     private String name;
 }

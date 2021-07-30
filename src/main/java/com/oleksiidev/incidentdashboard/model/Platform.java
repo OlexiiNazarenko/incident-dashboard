@@ -15,15 +15,15 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "PLATFORM")
+@Table(name = "`PLATFORM`")
 public class Platform {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "`ID`")
     private long id;
 
-    @Column(name = "Name")
+    @Column(name = "`Name`")
     private String name;
 
     @OneToMany (mappedBy = "platform", fetch = FetchType.LAZY)

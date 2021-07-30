@@ -14,30 +14,30 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "SUBSCRIPTION")
+@Table(name = "`SUBSCRIPTION`")
 public class Subscription {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "ID")
+    @Column (name = "`ID`")
     private long id;
 
-    @Column(name = "Email")
+    @Column(name = "`Email`")
     private String email;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PlatformID")
+    @JoinColumn(name = "`PlatformID`")
     private Platform platform;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ServiceID")
+    @JoinColumn(name = "`ServiceID`")
     private Service service;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IncidentTypeID")
+    @JoinColumn(name = "`IncidentTypeID`")
     private IncidentType incidentType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RegionID")
+    @JoinColumn(name = "`RegionID`")
     private Region region;
 }

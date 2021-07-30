@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,19 +18,19 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "SERVICE")
+@Table(name = "`SERVICE`")
 public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "`ID`")
     private long id;
 
-    @Column(name = "Name")
+    @Column(name = "`Name`")
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PlatformID")
+    @JoinColumn(name = "`PlatformID`")
     @JsonBackReference
     private Platform platform;
 

@@ -18,27 +18,27 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "COMPONENT")
+@Table(name = "`COMPONENT`")
 public class Component {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "`ID`")
     private long id;
 
-    @Column(name = "Name")
+    @Column(name = "`Name`")
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "ServiceID")
+    @JoinColumn(name = "`ServiceID`")
     @JsonBackReference
     private Service service;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "COMPONENT_REGIONS",
-            joinColumns = @JoinColumn(name = "ComponentID"),
-            inverseJoinColumns = @JoinColumn(name = "RegionID")
+            name = "`COMPONENT_REGIONS`",
+            joinColumns = @JoinColumn(name = "`ComponentID`"),
+            inverseJoinColumns = @JoinColumn(name = "`RegionID`")
     )
     private Set<Region> regions;
 }
