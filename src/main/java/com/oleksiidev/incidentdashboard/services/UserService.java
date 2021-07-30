@@ -7,6 +7,7 @@ import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,6 +49,7 @@ public class UserService {
         throw new AuthenticationCredentialsNotFoundException("Password doesn't match");
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User createUser(UserDTO userDTO) {
         // TODO: add check for role permission
         User newUser = new User();
@@ -60,6 +62,7 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User registerUser(RegistrationDTO registrationDTO) {
         User newUser = new User();
         newUser.setUsername(registrationDTO.getUsername());
@@ -70,6 +73,7 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User updateUser(Long id, UserDTO userDTO) {
         // TODO: add check for role permission
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("No user was found for id " + id ));
@@ -79,12 +83,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUserPassword(Long id, String password) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("No user was found for id " + id ));  
+    public User updateUserPassword(String username, String password) {
+        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("No user was found for username " + username ));
         user.setPassword(passwordEncoder.encode(password));
         return userRepository.save(user);
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public void deleteUser(Long id) {
         // TODO: add check for role permission
         userRepository.deleteById(id);
