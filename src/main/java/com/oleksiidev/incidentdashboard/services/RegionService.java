@@ -19,6 +19,7 @@ public class RegionService {
     }
 
     public Set<Region> getAllRegions() {
+        // TODO: Why hash set?
         return new HashSet<>(regionRepository.findAll());
     }
 

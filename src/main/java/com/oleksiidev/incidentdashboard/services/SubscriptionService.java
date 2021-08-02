@@ -1,11 +1,13 @@
 package com.oleksiidev.incidentdashboard.services;
 
 import com.oleksiidev.incidentdashboard.dto.SubscriptionDTO;
+import com.oleksiidev.incidentdashboard.model.Component;
 import com.oleksiidev.incidentdashboard.model.IncidentType;
 import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.model.Service;
 import com.oleksiidev.incidentdashboard.model.Subscription;
+import com.oleksiidev.incidentdashboard.repositories.ComponentRepository;
 import com.oleksiidev.incidentdashboard.repositories.IncidentTypeRepository;
 import com.oleksiidev.incidentdashboard.repositories.PlatformRepository;
 import com.oleksiidev.incidentdashboard.repositories.RegionRepository;
@@ -26,6 +28,7 @@ public class SubscriptionService {
     private final RegionRepository regionRepository;
     private final ServiceRepository serviceRepository;
     private final SubscriptionRepository subscriptionRepository;
+    private final ComponentRepository componentRepository;
 
     public boolean createSubscription(SubscriptionDTO subscriptionDTO) {
         Platform platform = platformRepository.findPlatformById(subscriptionDTO.getPlatformId());
@@ -65,7 +68,8 @@ public class SubscriptionService {
 
     private Set<Long> getAllRegionIdsForService(Service service) {
         Set<Long> ids = new HashSet<>();
-        service.getComponents().forEach(c -> ids.add(c.getId()));
+        List<Component> components = componentRepository.findComponentsByService(service);
+        components.forEach(c -> ids.add(c.getId()));
         return ids;
     }
 }
