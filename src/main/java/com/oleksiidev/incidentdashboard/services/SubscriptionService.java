@@ -1,6 +1,7 @@
 package com.oleksiidev.incidentdashboard.services;
 
 import com.oleksiidev.incidentdashboard.dto.SubscriptionDTO;
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Component;
 import com.oleksiidev.incidentdashboard.model.IncidentType;
 import com.oleksiidev.incidentdashboard.model.Platform;
@@ -31,19 +32,23 @@ public class SubscriptionService {
     private final ComponentRepository componentRepository;
 
     public boolean createSubscription(SubscriptionDTO subscriptionDTO) {
-        Platform platform = platformRepository.findPlatformById(subscriptionDTO.getPlatformId());
+        Platform platform = platformRepository.findById(subscriptionDTO.getPlatformId())
+                .orElseThrow(() -> new NotFoundException(Platform.class, subscriptionDTO.getPlatformId()));
 
         for (Long serviceId : subscriptionDTO.getServiceIds()) {
-            Service service = serviceRepository.findServiceById(serviceId);
+            Service service = serviceRepository.findById(serviceId)
+                    .orElseThrow(() -> new NotFoundException(Service.class, serviceId));
 
             if(service.getPlatform().getId() != subscriptionDTO.getPlatformId()) continue;
 
             for (Long regionId : subscriptionDTO.getRegionIds()) {
                 if (!getAllRegionIdsForService(service).contains(regionId)) continue;
-                Region region = regionRepository.findRegionById(regionId);
+                Region region = regionRepository.findById(regionId)
+                        .orElseThrow(() -> new NotFoundException(Region.class, regionId));
 
                 for (Long incidentTypeId : subscriptionDTO.getIncidentTypeIds()) {
-                    IncidentType incidentType = incidentTypeRepository.findIncidentTypeById(incidentTypeId);
+                    IncidentType incidentType = incidentTypeRepository.findById(incidentTypeId)
+                            .orElseThrow(() -> new NotFoundException("Incident Type", incidentTypeId));
 
                     Subscription newSubscription = new Subscription();
                     newSubscription.setEmail(subscriptionDTO.getEmail());
