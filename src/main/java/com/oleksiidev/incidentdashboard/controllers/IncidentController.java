@@ -1,6 +1,7 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
 import com.oleksiidev.incidentdashboard.dto.IncidentDTO;
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Incident;
 import com.oleksiidev.incidentdashboard.services.IncidentService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,8 @@ public class IncidentController {
 
     @GetMapping("/id/{id}")
     public Incident getIncidentById(@PathVariable Long id) {
-        return incidentService.getIncidentById(id);
+        return incidentService.getIncidentById(id)
+                .orElseThrow(() -> new NotFoundException(Incident.class, id));
     }
 
     @GetMapping("/status/{statusName}")

@@ -1,6 +1,7 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
 import com.oleksiidev.incidentdashboard.dto.ComponentDTO;
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Component;
 import com.oleksiidev.incidentdashboard.services.ComponentService;
 import lombok.NonNull;
@@ -25,7 +26,8 @@ public class ComponentController {
 
     @GetMapping("/id/{id}")
     public Component getComponentById(@PathVariable @NonNull Long id) {
-        return componentService.getComponentById(id);
+        return componentService.getComponentById(id)
+                .orElseThrow(() -> new NotFoundException(Component.class, id));
     }
 
     @GetMapping("/all")

@@ -1,10 +1,13 @@
 package com.oleksiidev.incidentdashboard.services;
 
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
+import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.model.Service;
 import com.oleksiidev.incidentdashboard.repositories.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @org.springframework.stereotype.Service
@@ -17,34 +20,47 @@ public class ServiceService {
         return serviceRepository.findAll();
     }
 
-    public Service getServiceById(Long id) {
-        return serviceRepository.findServiceById(id);
+    public Optional<Service> getServiceById(Long id) {
+        return serviceRepository.findById(id);
     }
 
     public List<Service> getServicesByPlatformId(Long platformId) {
-        return serviceRepository.findServicesByPlatform(platformService.getPlatformById(platformId));
+        return serviceRepository.findServicesByPlatform(platformService.getPlatformById(platformId)
+                .orElseThrow(() -> new NotFoundException(Platform.class, platformId)));
     }
 
     public Service createService(Long platformId, String serviceName) {
+        Platform platform = platformService.getPlatformById(platformId)
+                .orElseThrow(() -> new NotFoundException(Platform.class, platformId));
+
         Service newService = new Service();
         newService.setName(serviceName);
-        newService.setPlatform(platformService.getPlatformById(platformId));
+        newService.setPlatform(platform);
+
         return serviceRepository.save(newService);
     }
 
     public Service updateServiceName(Long id, String newName) {
-        Service service = serviceRepository.findServiceById(id);
+        Service service = serviceRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(Service.class, id));
+
         service.setName(newName);
+
         return serviceRepository.save(service);
     }
 
-    public Service changeServicePlatform(Long serviceId, Long platformId) {
-        Service service = serviceRepository.findServiceById(serviceId);
-        service.setPlatform(platformService.getPlatformById(platformId));
+    public Service updateServicePlatform(Long serviceId, Long platformId) {
+        Service service = serviceRepository.findById(serviceId)
+                .orElseThrow(() -> new NotFoundException(Service.class, serviceId));
+        Platform platform = platformService.getPlatformById(platformId)
+                .orElseThrow(() -> new NotFoundException(Platform.class, platformId));
+
+        service.setPlatform(platform);
+
         return serviceRepository.save(service);
     }
 
     public void deleteService(Long id) {
-        serviceRepository.delete(serviceRepository.findServiceById(id));
+        serviceRepository.deleteById(id);
     }
 }

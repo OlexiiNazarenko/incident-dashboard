@@ -5,6 +5,7 @@ import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,11 +36,12 @@ public class UserController {
 
     @GetMapping("/email")
     public User getUserByEmail(@RequestBody String email) {
-        return userService.getUserByEmail(email);
+        return userService.getUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Could not find User with email: " + email));
     }
 
     @PostMapping ("/create")
-    public User createUser(@RequestBody UserDTO userDTO) {
+    public User createUser( @RequestBody UserDTO userDTO) {
         return userService.createUser(userDTO);
     }
 

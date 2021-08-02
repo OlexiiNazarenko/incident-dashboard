@@ -1,11 +1,13 @@
 package com.oleksiidev.incidentdashboard.services;
 
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.repositories.RegionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -14,8 +16,8 @@ public class RegionService {
 
     private final RegionRepository regionRepository;
 
-    public Region getRegionById(Long id) {
-        return regionRepository.findRegionById(id);
+    public Optional<Region> getRegionById(Long id) {
+        return regionRepository.findById(id);
     }
 
     public Set<Region> getAllRegions() {
@@ -30,7 +32,8 @@ public class RegionService {
     }
 
     public Region updateRegionName(Long id, String newName) {
-        Region region = regionRepository.findRegionById(id);
+        Region region = regionRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(Region.class, id));
         region.setName(newName);
         return regionRepository.save(region);
     }

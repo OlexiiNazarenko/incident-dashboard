@@ -1,11 +1,13 @@
 package com.oleksiidev.incidentdashboard.services;
 
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.repositories.PlatformRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -13,8 +15,8 @@ public class PlatformService {
 
     private final PlatformRepository platformRepository;
 
-    public Platform getPlatformById(Long id) {
-        return platformRepository.findPlatformById(id);
+    public Optional<Platform> getPlatformById(Long id) {
+        return platformRepository.findById(id);
     }
 
     public List<Platform> getAllPlatforms() {
@@ -28,7 +30,8 @@ public class PlatformService {
     }
 
     public Platform updatePlatform(Long id, String newPlatformName) {
-        Platform platform = platformRepository.findPlatformById(id);
+        Platform platform = platformRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(Platform.class, id));
         platform.setName(newPlatformName);
         return platformRepository.save(platform);
     }

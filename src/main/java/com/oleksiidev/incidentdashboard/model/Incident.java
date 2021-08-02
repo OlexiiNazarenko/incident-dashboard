@@ -7,9 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,12 +15,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "`INCIDENT`")
-public class Incident {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "`ID`")
-    private long id;
+public class Incident extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`TypeID`")

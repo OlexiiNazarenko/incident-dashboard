@@ -2,6 +2,7 @@ package com.oleksiidev.incidentdashboard.services;
 
 import com.oleksiidev.incidentdashboard.dto.RegistrationDTO;
 import com.oleksiidev.incidentdashboard.dto.UserDTO;
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Role;
 import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.repositories.UserRepository;
@@ -32,7 +33,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUserByEmail(String email) {
+    public Optional<User> getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
 
@@ -42,7 +43,7 @@ public class UserService {
 
     public User authenticate(String username, String password) {
         User user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Not found"));
+                .orElseThrow(() -> new NotFoundException("Not found"));
         if (passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }

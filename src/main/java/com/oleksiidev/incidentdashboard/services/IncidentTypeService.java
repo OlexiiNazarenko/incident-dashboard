@@ -1,11 +1,13 @@
 package com.oleksiidev.incidentdashboard.services;
 
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.IncidentType;
 import com.oleksiidev.incidentdashboard.repositories.IncidentTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -13,8 +15,8 @@ public class IncidentTypeService {
 
     private final IncidentTypeRepository incidentTypeRepository;
 
-    public IncidentType getIncidentTypeById(Long id) {
-        return incidentTypeRepository.findIncidentTypeById(id);
+    public Optional<IncidentType> getIncidentTypeById(Long id) {
+        return incidentTypeRepository.findById(id);
     }
 
     public List<IncidentType> getAllIncidentTypes() {
@@ -28,7 +30,8 @@ public class IncidentTypeService {
     }
 
     public IncidentType updateIncidentTypeName(Long id, String newName) {
-        IncidentType incidentType = incidentTypeRepository.findIncidentTypeById(id);
+        IncidentType incidentType = incidentTypeRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Incident Type", id));
         incidentType.setName(newName);
         return incidentTypeRepository.save(incidentType);
     }

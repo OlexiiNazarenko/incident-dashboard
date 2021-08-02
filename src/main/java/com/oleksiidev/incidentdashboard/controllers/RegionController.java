@@ -1,5 +1,6 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.services.RegionService;
 import lombok.NonNull;
@@ -25,7 +26,8 @@ public class RegionController {
 
     @GetMapping("/id/{id}")
     public Region getRegionById(@PathVariable @NonNull Long id) {
-        return regionService.getRegionById(id);
+        return regionService.getRegionById(id)
+                .orElseThrow(() -> new NotFoundException(Region.class, id));
     }
 
     @GetMapping("/all")

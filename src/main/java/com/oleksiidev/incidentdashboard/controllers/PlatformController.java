@@ -1,5 +1,6 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.services.PlatformService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,8 @@ public class PlatformController {
 
     @GetMapping("/id/{id}")
     public Platform getPlatformById(@PathVariable @NonNull Long id) {
-        return platformService.getPlatformById(id);
+        return platformService.getPlatformById(id)
+                .orElseThrow(() -> new NotFoundException(Platform.class, id));
     }
 
     @GetMapping("/all")

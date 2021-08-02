@@ -1,5 +1,6 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.IncidentType;
 import com.oleksiidev.incidentdashboard.services.IncidentTypeService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,8 @@ public class IncidentTypeController {
 
     @GetMapping("/id/{id}")
     public IncidentType getIncidentTypeById(@PathVariable @NonNull Long id) {
-        return incidentTypeService.getIncidentTypeById(id);
+        return incidentTypeService.getIncidentTypeById(id)
+                .orElseThrow(() -> new NotFoundException("Incident Type", id));
     }
 
     @PostMapping ("/create")

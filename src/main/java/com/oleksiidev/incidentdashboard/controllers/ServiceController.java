@@ -1,5 +1,6 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Service;
 import com.oleksiidev.incidentdashboard.services.ServiceService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,8 @@ public class ServiceController {
 
     @GetMapping("/id/{id}")
     public Service getServiceById(@PathVariable @NonNull Long id) {
-        return serviceService.getServiceById(id);
+        return serviceService.getServiceById(id)
+                .orElseThrow(() -> new NotFoundException(Service.class, id));
     }
 
     @PostMapping("/create")
@@ -53,7 +55,7 @@ public class ServiceController {
     @PatchMapping("/update/{serviceId}")
     public Service updateServicePlatform(@PathVariable @NonNull Long serviceId,
                                          @RequestParam @NonNull Long platformId) {
-        return serviceService.changeServicePlatform(serviceId, platformId);
+        return serviceService.updateServicePlatform(serviceId, platformId);
     }
 
     @DeleteMapping("/delete/{id}")

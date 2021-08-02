@@ -5,10 +5,6 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -19,12 +15,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "`COMPONENT`")
-public class Component {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "`ID`")
-    private long id;
+public class Component extends BaseModel {
 
     @Column(name = "`Name`")
     private String name;
