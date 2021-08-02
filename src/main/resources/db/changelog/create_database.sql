@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `INCIDENT_TYPE` (
 CREATE TABLE IF NOT EXISTS `INCIDENT` (
     `ID` bigint(20) NOT NULL AUTO_INCREMENT,
     `TypeID` bigint(20) DEFAULT NULL,
+    `ComponentID` bigint(20) DEFAULT NULL,
     `UserID` bigint(20) DEFAULT NULL,
     `Description` text,
     `StartDate` timestamp,
@@ -82,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `INCIDENT` (
     `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`ID`),
     KEY `fk_incident_incidenttypeid` (`TypeID`),
+    KEY `fk_incident_componentid` (`ComponentID`),
     KEY `fk_incident_userid` (`UserID`),
     CONSTRAINT `fk_incident_incidenttypeid` FOREIGN KEY (`TypeID`) REFERENCES `INCIDENT_TYPE` (`ID`),
     CONSTRAINT `fk_incident_userid` FOREIGN KEY (`UserID`) REFERENCES `USER` (`ID`)
