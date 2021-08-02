@@ -15,6 +15,7 @@ import com.oleksiidev.incidentdashboard.repositories.RegionRepository;
 import com.oleksiidev.incidentdashboard.repositories.ServiceRepository;
 import com.oleksiidev.incidentdashboard.repositories.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -74,6 +75,9 @@ public class SubscriptionService {
     private Set<Long> getAllRegionIdsForService(Service service) {
         Set<Long> ids = new HashSet<>();
         List<Component> components = componentRepository.findComponentsByService(service);
+        if (ObjectUtils.isEmpty(components)) {
+            throw new NotFoundException("No Components were found for Service: " + service.getName());
+        }
         components.forEach(c -> ids.add(c.getId()));
         return ids;
     }
