@@ -25,8 +25,4 @@ public class Platform {
 
     @Column(name = "`Name`")
     private String name;
-
-    @OneToMany (mappedBy = "platform", fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Service> services;
 }

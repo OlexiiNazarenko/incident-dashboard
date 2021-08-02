@@ -25,19 +25,19 @@ public class Subscription {
     @Column(name = "`Email`")
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "`PlatformID`")
     private Platform platform;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "`ServiceID`")
     private Service service;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "`IncidentTypeID`")
     private IncidentType incidentType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "`RegionID`")
     private Region region;
 }

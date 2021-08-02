@@ -29,12 +29,8 @@ public class Service {
     @Column(name = "`Name`")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "`PlatformID`")
     @JsonBackReference
     private Platform platform;
-
-    @OneToMany(mappedBy = "service")
-    @JsonManagedReference
-    private List<Component> components;
 }

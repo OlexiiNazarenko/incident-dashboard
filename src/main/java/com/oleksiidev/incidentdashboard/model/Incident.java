@@ -30,6 +30,10 @@ public class Incident {
     private IncidentType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "`ComponentID`")
+    private Component component;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`UserID`")
     private User creator;
 

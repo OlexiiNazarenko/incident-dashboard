@@ -34,7 +34,7 @@ public class Component {
     @JsonBackReference
     private Service service;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "`COMPONENT_REGIONS`",
             joinColumns = @JoinColumn(name = "`ComponentID`"),
