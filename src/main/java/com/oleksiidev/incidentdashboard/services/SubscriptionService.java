@@ -66,12 +66,6 @@ public class SubscriptionService {
         return true;
     }
 
-    public boolean deleteAllSubscriptionsForEmail(String email) {
-        List<Subscription> subscriptions = subscriptionRepository.findSubscriptionsByEmail(email);
-        subscriptionRepository.deleteAll(subscriptions);
-        return true;
-    }
-
     private Set<Long> getAllRegionIdsForService(Service service) {
         Set<Long> ids = new HashSet<>();
         List<Component> components = componentRepository.findComponentsByService(service);
@@ -80,5 +74,11 @@ public class SubscriptionService {
         }
         components.forEach(c -> ids.add(c.getId()));
         return ids;
+    }
+
+    public boolean deleteAllSubscriptionsForEmail(String email) {
+        List<Subscription> subscriptions = subscriptionRepository.findSubscriptionsByEmail(email);
+        subscriptionRepository.deleteAll(subscriptions);
+        return true;
     }
 }
