@@ -3,6 +3,7 @@ package com.oleksiidev.incidentdashboard.services;
 import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.IncidentType;
 import com.oleksiidev.incidentdashboard.repositories.IncidentTypeRepository;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,16 +23,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles ("test")
-class IncidentTypeServiceTestIT {
+class IncidentTypeServiceIT {
 
-    @Autowired
     private final IncidentTypeService incidentTypeService;
-
-    @Autowired
     private final IncidentTypeRepository incidentTypeRepository;
 
     @Autowired
-    IncidentTypeServiceTestIT(IncidentTypeService incidentTypeService, IncidentTypeRepository incidentTypeRepository) {
+    IncidentTypeServiceIT(IncidentTypeService incidentTypeService, IncidentTypeRepository incidentTypeRepository) {
         this.incidentTypeService = incidentTypeService;
         this.incidentTypeRepository = incidentTypeRepository;
     }
@@ -42,10 +41,8 @@ class IncidentTypeServiceTestIT {
 
     @Test
     void testGetIncidentTypeById() {
-        IncidentType expected = new IncidentType();
-        expected.setName("Random Name");
+        IncidentType expected = createIncidentTypeAndSaveToDatabase();
 
-        expected = incidentTypeRepository.save(expected);
         IncidentType actual = incidentTypeService.getIncidentTypeById(expected.getId())
                 .orElseThrow(() -> new NotFoundException("Saved Incident Type was not found in database by its id."));
 
@@ -54,13 +51,10 @@ class IncidentTypeServiceTestIT {
 
     @Test
     void testGetAllIncidentTypes() {
-        IncidentType incidentType1 = new IncidentType();
-        incidentType1.setName("Test Incident Type");
+        IncidentType incidentType1 = createIncidentTypeAndSaveToDatabase();
+        IncidentType incidentType2 = createIncidentTypeAndSaveToDatabase();
 
-        IncidentType incidentType2 = new IncidentType();
-        incidentType2.setName("Another Test Incident Type");
-
-        List<IncidentType> expected = incidentTypeRepository.saveAll(Arrays.asList(incidentType1, incidentType2));
+        List<IncidentType> expected = Arrays.asList(incidentType1, incidentType2);
         List<IncidentType> actual = incidentTypeService.getAllIncidentTypes();
 
         assertEquals(actual, expected);
@@ -76,29 +70,39 @@ class IncidentTypeServiceTestIT {
 
     @Test
     void testUpdateIncidentTypeName() {
-        String name = "Incident Type _1";
-        IncidentType incidentType = new IncidentType();
-        incidentType.setName(name);
-        Long savedId = incidentTypeRepository.save(incidentType).getId();
+        IncidentType incidentType = createIncidentTypeAndSaveToDatabase();
 
         String newName = "New Incident Type Name";
-        IncidentType actual = incidentTypeService.updateIncidentTypeName(savedId, newName);
+        IncidentType actual = incidentTypeService.updateIncidentTypeName(incidentType.getId(), newName);
 
         assertEquals(actual.getName(), newName);
     }
 
     @Test
     void testDeleteIncidentType() {
-        String name = "Incident Type To Delete";
+        IncidentType incidentType = createIncidentTypeAndSaveToDatabase();
+
+        incidentTypeService.deleteIncidentType(incidentType.getId());
+
+        assertEquals(incidentTypeRepository.findById(incidentType.getId()), Optional.empty());
+    }
+
+    private IncidentType createIncidentType(String name) {
         IncidentType incidentType = new IncidentType();
         incidentType.setName(name);
-        Long savedId = incidentTypeRepository.save(incidentType).getId();
+        return incidentType;
+    }
 
-        incidentTypeService.deleteIncidentType(savedId);
+    private IncidentType createIncidentType() {
+        String name = RandomStringUtils.randomAlphabetic(10);
+        return createIncidentType(name);
+    }
 
-        IncidentType actual = incidentTypeService.getIncidentTypeById(savedId)
-                .orElseThrow(() -> new NotFoundException("Saved Incident Type was not found in database by its id."));
+    private IncidentType createIncidentTypeAndSaveToDatabase(String name) {
+        return incidentTypeRepository.save(createIncidentType(name));
+    }
 
-        assertNull(actual);
+    private IncidentType createIncidentTypeAndSaveToDatabase() {
+        return incidentTypeRepository.save(createIncidentType());
     }
 }

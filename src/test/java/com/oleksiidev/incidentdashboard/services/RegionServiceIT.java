@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase (replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles ("test")
-class RegionServiceTestIT {
+class RegionServiceIT {
 
     @Autowired
     private RegionService regionService;
