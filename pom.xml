@@ -128,9 +128,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.places.Main</mainClass>
+                    <mainClass>com.oleksiidev.incidentdashboard.IncidentDashboardApplication</mainClass>
                 </configuration>
-
                 <executions>
                     <execution>
                         <goals>
@@ -138,9 +137,7 @@
                         </goals>
                     </execution>
                 </executions>
-
             </plugin>
-
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
