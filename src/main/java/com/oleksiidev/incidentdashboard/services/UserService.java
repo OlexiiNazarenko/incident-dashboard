@@ -26,7 +26,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("No user was found for id " + id ));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("No user was found for id " + id ));
     }
 
     public List<User> getAllUsers() {
@@ -43,7 +43,7 @@ public class UserService {
 
     public User authenticate(String username, String password) {
         User user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new NotFoundException("Not found"));
+                .orElseThrow(() -> new NotFoundException("No User was found for username " + username ));
         if (passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }
@@ -77,7 +77,7 @@ public class UserService {
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User updateUser(Long id, UserDTO userDTO) {
         // TODO: add check for role permission
-        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("No user was found for id " + id ));
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("No User was found for id " + id ));
         user.setUsername(userDTO.getUsername());
         user.setRole(Role.valueOf(userDTO.getRoleName()));
         user.setEmail(userDTO.getEmail());
@@ -85,7 +85,7 @@ public class UserService {
     }
 
     public User updateUserPassword(String username, String password) {
-        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("No user was found for username " + username ));
+        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new NotFoundException("No User was found for username " + username ));
         user.setPassword(passwordEncoder.encode(password));
         return userRepository.save(user);
     }

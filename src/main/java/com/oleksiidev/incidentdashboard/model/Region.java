@@ -1,5 +1,6 @@
 package com.oleksiidev.incidentdashboard.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.Column;

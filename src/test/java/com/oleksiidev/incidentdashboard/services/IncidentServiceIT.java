@@ -32,6 +32,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -101,25 +102,13 @@ class IncidentServiceIT {
     }
 
     @Test
-    void testGetIncidentsByPlatformId() {
-        Platform platform = createPlatform();
-        Incident incident1 = createIncidentAndSaveToDatabase(platform);
-        Incident incident2 = createIncidentAndSaveToDatabase(platform);
+    void testGetIncidentsByComponentId() {
+        Component component = createComponent();
+        Incident incident = createIncidentAndSaveToDatabase(component);
 
-        List<Incident> actual = incidentService.getIncidentsByPlatformId(platform.getId());
+        List<Incident> actual = incidentService.getIncidentsByComponentId(component.getId());
 
-        assertEquals(actual, Arrays.asList(incident1, incident2));
-    }
-
-    @Test
-    void testGetIncidentsByServiceId() {
-        Service service = createService();
-        Incident incident1 = createIncidentAndSaveToDatabase(service);
-        Incident incident2 = createIncidentAndSaveToDatabase(service);
-
-        List<Incident> actual = incidentService.getIncidentsByServiceId(service.getId());
-
-        assertEquals(actual, Arrays.asList(incident1, incident2));
+        assertEquals(actual, Collections.singletonList(incident));
     }
 
     @Test
@@ -229,14 +218,7 @@ class IncidentServiceIT {
         return incidentRepository.save(incident);
     }
 
-    private Incident createIncidentAndSaveToDatabase(Platform platform) {
-        Service service = createService(platform);
-        return createIncidentAndSaveToDatabase(service);
-    }
-
-    private Incident createIncidentAndSaveToDatabase(Service service) {
-        Component component = createComponent(service);
-
+    private Incident createIncidentAndSaveToDatabase(Component component) {
         Incident incident = createIncident();
         incident.setComponent(component);
         return incidentRepository.save(incident);
