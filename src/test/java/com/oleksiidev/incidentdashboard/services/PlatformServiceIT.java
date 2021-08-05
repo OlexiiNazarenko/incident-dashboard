@@ -23,10 +23,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles ("test")
 class PlatformServiceIT {
 
+    private final PlatformService platformService;
+    private final PlatformRepository platformRepository;
+
     @Autowired
-    private PlatformService platformService;
-    @Autowired
-    private PlatformRepository platformRepository;
+    public PlatformServiceIT(PlatformService platformService, PlatformRepository platformRepository) {
+        this.platformService = platformService;
+        this.platformRepository = platformRepository;
+    }
 
     @AfterEach
     void tearDown() {
