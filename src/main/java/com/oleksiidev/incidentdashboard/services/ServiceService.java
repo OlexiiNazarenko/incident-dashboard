@@ -3,6 +3,7 @@ package com.oleksiidev.incidentdashboard.services;
 import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.model.Service;
+import com.oleksiidev.incidentdashboard.repositories.PlatformRepository;
 import com.oleksiidev.incidentdashboard.repositories.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 public class ServiceService {
 
     private final ServiceRepository serviceRepository;
-    private final PlatformService platformService;
+    private final PlatformRepository platformRepository;
 
     public List<Service> getAllServices() {
         return serviceRepository.findAll();
@@ -25,12 +26,12 @@ public class ServiceService {
     }
 
     public List<Service> getServicesByPlatformId(Long platformId) {
-        return serviceRepository.findServicesByPlatform(platformService.getPlatformById(platformId)
+        return serviceRepository.findServicesByPlatform(platformRepository.findById(platformId)
                 .orElseThrow(() -> new NotFoundException(Platform.class, platformId)));
     }
 
     public Service createService(Long platformId, String serviceName) {
-        Platform platform = platformService.getPlatformById(platformId)
+        Platform platform = platformRepository.findById(platformId)
                 .orElseThrow(() -> new NotFoundException(Platform.class, platformId));
 
         Service newService = new Service();
@@ -52,7 +53,7 @@ public class ServiceService {
     public Service updateServicePlatform(Long serviceId, Long platformId) {
         Service service = serviceRepository.findById(serviceId)
                 .orElseThrow(() -> new NotFoundException(Service.class, serviceId));
-        Platform platform = platformService.getPlatformById(platformId)
+        Platform platform = platformRepository.findById(platformId)
                 .orElseThrow(() -> new NotFoundException(Platform.class, platformId));
 
         service.setPlatform(platform);
