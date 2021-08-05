@@ -9,5 +9,4 @@ import java.util.Optional;
 @Repository
 public interface IncidentTypeRepository extends JpaRepository<IncidentType, Long> {
 
-    Optional<IncidentType> findById(Long id);
 }

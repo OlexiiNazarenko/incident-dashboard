@@ -10,7 +10,5 @@ import java.util.Set;
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Long> {
 
-    Optional<Region> findById(Long id);
-
     Set<Region> findRegionsByIdIn(Set<Long> ids);
 }

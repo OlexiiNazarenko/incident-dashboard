@@ -10,8 +10,6 @@ import java.util.Optional;
 @Repository
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
 
-    Optional<Subscription> findById(Long id);
-
     List<Subscription> findSubscriptionsByEmail(String email);
 
     void deleteSubscriptionsByEmail(String email);
