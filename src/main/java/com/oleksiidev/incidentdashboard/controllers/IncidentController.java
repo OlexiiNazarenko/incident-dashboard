@@ -34,14 +34,9 @@ public class IncidentController {
         return incidentService.getIncidentsByStatus(statusName);
     }
 
-    @GetMapping("/platformId/{platformId}")
-    public List<Incident> getIncidentsByPlatformId(@PathVariable Long platformId) {
-        return incidentService.getIncidentsByPlatformId(platformId);
-    }
-
-    @GetMapping("/serviceId/{serviceId}")
-    public List<Incident> getIncidentsByServiceId(@PathVariable Long serviceId) {
-        return incidentService.getIncidentsByServiceId(serviceId);
+    @GetMapping("/componentId/{componentId}")
+    public List<Incident> getIncidentsByPlatformId(@PathVariable Long componentId) {
+        return incidentService.getIncidentsByComponentId(componentId);
     }
 
     @PostMapping("/create")
