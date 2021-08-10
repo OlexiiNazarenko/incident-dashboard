@@ -33,8 +33,8 @@ class ServiceServiceTest {
     private final Service savedService;
 
     public ServiceServiceTest(@Mock ServiceRepository serviceRepository,
-                              @Mock PlatformRepository platformRepository) {
-        serviceService = new ServiceService(serviceRepository, platformRepository);
+                              @Mock PlatformService platformService) {
+        serviceService = new ServiceService(serviceRepository, platformService);
 
         Platform platform1 = new Platform();
         platform1.setId(1L);
@@ -80,10 +80,10 @@ class ServiceServiceTest {
 
         Mockito.when(serviceRepository.findById(1L)).thenReturn(Optional.of(service1p1));
         Mockito.when(serviceRepository.findById(2L)).thenReturn(Optional.of(service2p1));
-        Mockito.when(platformRepository.findById(1L)).thenReturn(Optional.of(platform1));
+        Mockito.when(platformService.findPlatformById(1L)).thenReturn(Optional.of(platform1));
         Mockito.when(serviceRepository.findServicesByPlatform(platform1)).thenReturn(Arrays.asList(service1p1, service2p1));
         Mockito.when(serviceRepository.findServicesByPlatform(platform2)).thenReturn(Collections.singletonList(service3p2));
-        Mockito.when(platformRepository.findById(2L)).thenReturn(Optional.of(platform2));
+        Mockito.when(platformService.findPlatformById(2L)).thenReturn(Optional.of(platform2));
         Mockito.when(serviceRepository.findAll()).thenReturn(Arrays.asList(service1p1, service2p1, service3p2));
         Mockito.when(serviceRepository.save(serviceToSave)).thenReturn(savedService);
         Mockito.when(serviceRepository.save(updatedService1)).thenReturn(updatedService1);
@@ -98,14 +98,14 @@ class ServiceServiceTest {
 
     @Test
     void testGetServiceById_Success() {
-        Optional<Service> actual = serviceService.getServiceById(1L);
+        Optional<Service> actual = serviceService.findServiceById(1L);
         assertTrue(actual.isPresent());
         assertEquals(actual.get(), service1p1);
     }
 
     @Test
     void testGetServiceById_ReturnNullForInappropriateId() {
-        Optional<Service> actual = serviceService.getServiceById(5L);
+        Optional<Service> actual = serviceService.findServiceById(5L);
         assertFalse(actual.isPresent());
     }
 

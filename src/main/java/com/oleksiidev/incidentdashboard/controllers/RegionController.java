@@ -26,7 +26,7 @@ public class RegionController {
 
     @GetMapping("/id/{id}")
     public Region getRegionById(@PathVariable @NonNull Long id) {
-        return regionService.getRegionById(id)
+        return regionService.findRegionById(id)
                 .orElseThrow(() -> new NotFoundException(Region.class, id));
     }
 

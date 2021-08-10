@@ -6,8 +6,6 @@ import com.oleksiidev.incidentdashboard.model.Component;
 import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.model.Service;
 import com.oleksiidev.incidentdashboard.repositories.ComponentRepository;
-import com.oleksiidev.incidentdashboard.repositories.RegionRepository;
-import com.oleksiidev.incidentdashboard.repositories.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,10 +19,11 @@ import java.util.Set;
 public class ComponentService {
 
     private final ComponentRepository componentRepository;
-    private final ServiceRepository serviceRepository;
-    private final RegionRepository regionRepository;
 
-    public Optional<Component> getComponentById(Long id) {
+    private final ServiceService serviceService;
+    private final RegionService regionService;
+
+    public Optional<Component> findComponentById(Long id) {
         return componentRepository.findById(id);
     }
 
@@ -33,15 +32,15 @@ public class ComponentService {
     }
 
     public List<Component> getComponentsByServiceId(Long serviceId) {
-        return componentRepository.findComponentsByService(serviceRepository.findById(serviceId)
+        return componentRepository.findComponentsByService(serviceService.findServiceById(serviceId)
                 .orElseThrow(() -> new NotFoundException(Service.class, serviceId)));
     }
 
     public Component createComponent(ComponentDTO componentDTO) {
-        Service service = serviceRepository.findById(componentDTO.getServiceId())
+        Service service = serviceService.findServiceById(componentDTO.getServiceId())
                 .orElseThrow(() -> new NotFoundException(Service.class, componentDTO.getServiceId()));
 
-        Set<Region> regions = regionRepository.findRegionsByIdIn(componentDTO.getRegionsIds());
+        Set<Region> regions = regionService.getRegionsByIds(componentDTO.getRegionsIds());
         if (ObjectUtils.isEmpty(regions)) {
             throw new NotFoundException("No region was found for ids: " + componentDTO.getRegionsIds());
         }
@@ -62,10 +61,10 @@ public class ComponentService {
         Component component = componentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Component.class, id));
 
-        Service service = serviceRepository.findById(componentDTO.getServiceId())
+        Service service = serviceService.findServiceById(componentDTO.getServiceId())
                 .orElseThrow(() -> new NotFoundException(Service.class, componentDTO.getServiceId()));
 
-        Set<Region> regions = regionRepository.findRegionsByIdIn(componentDTO.getRegionsIds());
+        Set<Region> regions = regionService.getRegionsByIds(componentDTO.getRegionsIds());
         if (ObjectUtils.isEmpty(regions)) {
             throw new NotFoundException("No region was found for ids: " + componentDTO.getRegionsIds());
         }

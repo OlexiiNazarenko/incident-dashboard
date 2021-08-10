@@ -15,7 +15,7 @@ public class IncidentTypeService {
 
     private final IncidentTypeRepository incidentTypeRepository;
 
-    public Optional<IncidentType> getIncidentTypeById(Long id) {
+    public Optional<IncidentType> findIncidentTypeById(Long id) {
         return incidentTypeRepository.findById(id);
     }
 

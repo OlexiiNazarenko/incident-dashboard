@@ -15,7 +15,7 @@ public class PlatformService {
 
     private final PlatformRepository platformRepository;
 
-    public Optional<Platform> getPlatformById(Long id) {
+    public Optional<Platform> findPlatformById(Long id) {
         return platformRepository.findById(id);
     }
 

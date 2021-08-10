@@ -75,7 +75,7 @@ class ServiceServiceIT {
 
         Service expected = serviceRepository.save(service1);
 
-        Service actual = serviceService.getServiceById(expected.getId())
+        Service actual = serviceService.findServiceById(expected.getId())
                 .orElseThrow(() -> new NotFoundException("Saved service was not found in database by id"));
 
         assertEquals(actual, expected);

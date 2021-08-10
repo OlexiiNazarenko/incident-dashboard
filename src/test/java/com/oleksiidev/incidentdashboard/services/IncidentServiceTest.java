@@ -44,10 +44,10 @@ class IncidentServiceTest {
     private final Date endDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1));
 
     public IncidentServiceTest(@Mock IncidentRepository incidentRepository,
-                               @Mock UserRepository userRepository,
-                               @Mock IncidentTypeRepository incidentTypeRepository,
-                               @Mock ComponentRepository componentRepository) {
-        incidentService = new IncidentService(incidentRepository, userRepository, incidentTypeRepository, componentRepository);
+                               @Mock UserService userService,
+                               @Mock IncidentTypeService incidentTypeService,
+                               @Mock ComponentService componentService) {
+        incidentService = new IncidentService(incidentRepository, userService, incidentTypeService, componentService);
 
         User creator1 = new User();
         creator1.setId(1L);
@@ -136,26 +136,26 @@ class IncidentServiceTest {
         Mockito.when(incidentRepository.save(incidentToSave)).thenReturn(incident3);
         Mockito.when(incidentRepository.save(incident4)).thenReturn(incident4);
 
-        Mockito.when(incidentTypeRepository.findById(1L)).thenReturn(Optional.of(incidentType));
-        Mockito.when(incidentTypeRepository.findById(gt(1L))).thenReturn(Optional.empty());
+        Mockito.when(incidentTypeService.findIncidentTypeById(1L)).thenReturn(Optional.of(incidentType));
+        Mockito.when(incidentTypeService.findIncidentTypeById(gt(1L))).thenReturn(Optional.empty());
 
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(creator1));
-        Mockito.when(userRepository.findById(gt(1L))).thenReturn(Optional.empty());
+        Mockito.when(userService.findUserById(1L)).thenReturn(Optional.of(creator1));
+        Mockito.when(userService.findUserById(gt(1L))).thenReturn(Optional.empty());
 
-        Mockito.when(componentRepository.findById(1L)).thenReturn(Optional.of(component));
-        Mockito.when(componentRepository.findById(gt(1L))).thenReturn(Optional.empty());
+        Mockito.when(componentService.findComponentById(1L)).thenReturn(Optional.of(component));
+        Mockito.when(componentService.findComponentById(gt(1L))).thenReturn(Optional.empty());
     }
 
     @Test
     void testGetIncidentById_Success() {
-        Optional<Incident> actual = incidentService.getIncidentById(1L);
+        Optional<Incident> actual = incidentService.findIncidentById(1L);
         assertTrue(actual.isPresent());
         assertEquals(actual.get(), incident1);
     }
 
     @Test
     void testGetIncidentById_ReturnNullForWrongId() {
-        Optional<Incident> actual = incidentService.getIncidentById(99L);
+        Optional<Incident> actual = incidentService.findIncidentById(99L);
         assertFalse(actual.isPresent());
     }
 

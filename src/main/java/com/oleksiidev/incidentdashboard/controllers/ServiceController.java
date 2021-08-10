@@ -36,7 +36,7 @@ public class ServiceController {
 
     @GetMapping("/id/{id}")
     public Service getServiceById(@PathVariable @NonNull Long id) {
-        return serviceService.getServiceById(id)
+        return serviceService.findServiceById(id)
                 .orElseThrow(() -> new NotFoundException(Service.class, id));
     }
 

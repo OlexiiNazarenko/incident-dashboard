@@ -8,11 +8,6 @@ import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.model.Service;
 import com.oleksiidev.incidentdashboard.model.Subscription;
-import com.oleksiidev.incidentdashboard.repositories.ComponentRepository;
-import com.oleksiidev.incidentdashboard.repositories.IncidentTypeRepository;
-import com.oleksiidev.incidentdashboard.repositories.PlatformRepository;
-import com.oleksiidev.incidentdashboard.repositories.RegionRepository;
-import com.oleksiidev.incidentdashboard.repositories.ServiceRepository;
 import com.oleksiidev.incidentdashboard.repositories.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
@@ -25,30 +20,31 @@ import java.util.Set;
 @org.springframework.stereotype.Service
 public class SubscriptionService {
 
-    private final IncidentTypeRepository incidentTypeRepository;
-    private final PlatformRepository platformRepository;
-    private final RegionRepository regionRepository;
-    private final ServiceRepository serviceRepository;
     private final SubscriptionRepository subscriptionRepository;
-    private final ComponentRepository componentRepository;
+
+    private final IncidentTypeService incidentTypeService;
+    private final PlatformService platformService;
+    private final RegionService regionService;
+    private final ServiceService serviceService;
+    private final ComponentService componentService;
 
     public boolean createSubscription(SubscriptionDTO subscriptionDTO) {
-        Platform platform = platformRepository.findById(subscriptionDTO.getPlatformId())
+        Platform platform = platformService.findPlatformById(subscriptionDTO.getPlatformId())
                 .orElseThrow(() -> new NotFoundException(Platform.class, subscriptionDTO.getPlatformId()));
 
         for (Long serviceId : subscriptionDTO.getServiceIds()) {
-            Service service = serviceRepository.findById(serviceId)
+            Service service = serviceService.findServiceById(serviceId)
                     .orElseThrow(() -> new NotFoundException(Service.class, serviceId));
 
             if(service.getPlatform().getId() != subscriptionDTO.getPlatformId()) continue;
 
             for (Long regionId : subscriptionDTO.getRegionIds()) {
                 if (!getAllRegionIdsForService(service).contains(regionId)) continue;
-                Region region = regionRepository.findById(regionId)
+                Region region = regionService.findRegionById(regionId)
                         .orElseThrow(() -> new NotFoundException(Region.class, regionId));
 
                 for (Long incidentTypeId : subscriptionDTO.getIncidentTypeIds()) {
-                    IncidentType incidentType = incidentTypeRepository.findById(incidentTypeId)
+                    IncidentType incidentType = incidentTypeService.findIncidentTypeById(incidentTypeId)
                             .orElseThrow(() -> new NotFoundException("Incident Type", incidentTypeId));
 
                     Subscription newSubscription = new Subscription();
@@ -66,19 +62,19 @@ public class SubscriptionService {
         return true;
     }
 
+    public boolean deleteAllSubscriptionsForEmail(String email) {
+        List<Subscription> subscriptions = subscriptionRepository.findSubscriptionsByEmail(email);
+        subscriptionRepository.deleteAll(subscriptions);
+        return true;
+    }
+
     private Set<Long> getAllRegionIdsForService(Service service) {
         Set<Long> ids = new HashSet<>();
-        List<Component> components = componentRepository.findComponentsByService(service);
+        List<Component> components = componentService.getComponentsByServiceId(service.getId());
         if (ObjectUtils.isEmpty(components)) {
             throw new NotFoundException("No Components were found for Service: " + service.getName());
         }
         components.forEach(c -> ids.add(c.getId()));
         return ids;
-    }
-
-    public boolean deleteAllSubscriptionsForEmail(String email) {
-        List<Subscription> subscriptions = subscriptionRepository.findSubscriptionsByEmail(email);
-        subscriptionRepository.deleteAll(subscriptions);
-        return true;
     }
 }

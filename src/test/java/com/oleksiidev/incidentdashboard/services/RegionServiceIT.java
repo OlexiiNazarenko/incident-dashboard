@@ -42,7 +42,7 @@ class RegionServiceIT {
         region.setName(name);
 
         Region expected = regionRepository.save(region);
-        Region actual = regionService.getRegionById(region.getId())
+        Region actual = regionService.findRegionById(region.getId())
                 .orElseThrow(() -> new NotFoundException("Saved region was not found in database by id"));
 
         assertEquals(actual, expected);

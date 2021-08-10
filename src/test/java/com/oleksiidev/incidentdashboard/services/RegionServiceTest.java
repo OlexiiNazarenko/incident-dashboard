@@ -59,14 +59,14 @@ class RegionServiceTest {
 
     @Test
     void testGetRegionById_Success() {
-        Optional<Region> actual = regionService.getRegionById(1L);
+        Optional<Region> actual = regionService.findRegionById(1L);
         assertTrue(actual.isPresent());
         assertEquals(actual.get(), region1);
     }
 
     @Test
     void testGetRegionById_ReturnNullForInappropriateId() {
-        Optional<Region> actual = regionService.getRegionById(4L);
+        Optional<Region> actual = regionService.findRegionById(4L);
         assertFalse(actual.isPresent());
     }
 

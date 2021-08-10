@@ -1,6 +1,7 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
 import com.oleksiidev.incidentdashboard.dto.UserDTO;
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,8 @@ public class UserController {
 
     @GetMapping ("/id/{id}")
     public User getUserById(@PathVariable @NonNull Long id) {
-        return userService.getUserById(id);
+        return userService.findUserById(id)
+                .orElseThrow(() -> new NotFoundException("No user was found for id " + id ));
     }
 
     @GetMapping("/all")

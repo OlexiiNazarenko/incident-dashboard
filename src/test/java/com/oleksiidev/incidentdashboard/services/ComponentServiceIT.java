@@ -63,7 +63,7 @@ class ComponentServiceIT {
     @Test
     void testGetComponentById() {
         Component expected = createComponentAndSaveToDatabase();
-        Component actual = componentService.getComponentById(expected.getId())
+        Component actual = componentService.findComponentById(expected.getId())
                 .orElseThrow(() -> new NotFoundException("Saved Incident Type was not found in database by its id."));
         Set<Region> regions = actual.getRegions();
         assertEquals(actual, expected);

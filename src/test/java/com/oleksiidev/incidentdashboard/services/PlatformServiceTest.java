@@ -58,14 +58,14 @@ class PlatformServiceTest {
 
     @Test
     void testGetPlatformById_Success() {
-        Optional<Platform> actual = platformService.getPlatformById(1L);
+        Optional<Platform> actual = platformService.findPlatformById(1L);
         assertTrue(actual.isPresent());
         assertEquals(actual.get(), platform1);
     }
 
     @Test
     void testGetPlatformById_ReturnNullForInappropriateId() {
-        Optional<Platform> actual = platformService.getPlatformById(4L);
+        Optional<Platform> actual = platformService.findPlatformById(4L);
         assertFalse(actual.isPresent());
     }
 

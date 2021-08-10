@@ -1,7 +1,6 @@
 package com.oleksiidev.incidentdashboard.services;
 
 import com.oleksiidev.incidentdashboard.dto.IncidentDTO;
-import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Component;
 import com.oleksiidev.incidentdashboard.model.Incident;
 import com.oleksiidev.incidentdashboard.model.IncidentStatus;
@@ -35,6 +34,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,10 +84,10 @@ class IncidentServiceIT {
     void testGetIncidentById() {
         Incident expected = createIncidentAndSaveToDatabase();
 
-        Incident actual = incidentService.getIncidentById(expected.getId())
-                .orElseThrow(() -> new NotFoundException("Saved Incident was not found in database by its id."));
+        Optional<Incident> actual = incidentService.findIncidentById(expected.getId());
 
-        assertEquals(actual, expected);
+        assertTrue(actual.isPresent());
+        assertEquals(actual.get(), expected);
     }
 
     @Test

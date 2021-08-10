@@ -44,7 +44,7 @@ class PlatformServiceIT {
         platform.setName(name);
 
         Platform expected = platformRepository.save(platform);
-        Platform actual = platformService.getPlatformById(expected.getId())
+        Platform actual = platformService.findPlatformById(expected.getId())
                 .orElseThrow(() -> new NotFoundException("Saved Platform was not found in database by id"));
 
         assertEquals(actual, expected);

@@ -3,7 +3,6 @@ package com.oleksiidev.incidentdashboard.services;
 import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.model.Service;
-import com.oleksiidev.incidentdashboard.repositories.PlatformRepository;
 import com.oleksiidev.incidentdashboard.repositories.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -15,23 +14,23 @@ import java.util.Optional;
 public class ServiceService {
 
     private final ServiceRepository serviceRepository;
-    private final PlatformRepository platformRepository;
+    private final PlatformService platformService;
 
     public List<Service> getAllServices() {
         return serviceRepository.findAll();
     }
 
-    public Optional<Service> getServiceById(Long id) {
+    public Optional<Service> findServiceById(Long id) {
         return serviceRepository.findById(id);
     }
 
     public List<Service> getServicesByPlatformId(Long platformId) {
-        return serviceRepository.findServicesByPlatform(platformRepository.findById(platformId)
+        return serviceRepository.findServicesByPlatform(platformService.findPlatformById(platformId)
                 .orElseThrow(() -> new NotFoundException(Platform.class, platformId)));
     }
 
     public Service createService(Long platformId, String serviceName) {
-        Platform platform = platformRepository.findById(platformId)
+        Platform platform = platformService.findPlatformById(platformId)
                 .orElseThrow(() -> new NotFoundException(Platform.class, platformId));
 
         Service newService = new Service();
@@ -53,7 +52,7 @@ public class ServiceService {
     public Service updateServicePlatform(Long serviceId, Long platformId) {
         Service service = serviceRepository.findById(serviceId)
                 .orElseThrow(() -> new NotFoundException(Service.class, serviceId));
-        Platform platform = platformRepository.findById(platformId)
+        Platform platform = platformService.findPlatformById(platformId)
                 .orElseThrow(() -> new NotFoundException(Platform.class, platformId));
 
         service.setPlatform(platform);

@@ -108,13 +108,14 @@ class UserServiceTest {
 
     @Test
     void testGetUserById_Success() {
-        User actual = userService.getUserById(1L);
-        assertEquals(actual, user1);
+        Optional<User> actual = userService.findUserById(1L);
+        assertTrue(actual.isPresent());
+        assertEquals(user1, actual.get());
     }
 
     @Test
     void testGetUserById_ThrowNotFoundExceptionForInappropriateId() {
-        assertThrows(NotFoundException.class, () -> userService.getUserById(990L));
+        assertThrows(NotFoundException.class, () -> userService.findUserById(990L));
     }
 
     @Test

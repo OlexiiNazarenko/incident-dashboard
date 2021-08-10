@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,8 +24,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("No user was found for id " + id ));
+    public Optional<User> findUserById(Long id) {
+        return userRepository.findById(id);
     }
 
     public List<User> getAllUsers() {
@@ -52,7 +51,6 @@ public class UserService {
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User createUser(UserDTO userDTO) {
-        // TODO: add check for role permission
         User newUser = new User();
         newUser.setUsername(userDTO.getUsername());
         newUser.setRole(Role.valueOf(userDTO.getRoleName()));
@@ -67,7 +65,6 @@ public class UserService {
     public User registerUser(RegistrationDTO registrationDTO) {
         User newUser = new User();
         newUser.setUsername(registrationDTO.getUsername());
-        // TODO: do we want to set ADMIN role to this users by default?
         newUser.setRole(Role.ROLE_ADMIN);
         newUser.setEmail(registrationDTO.getEmail());
         newUser.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
@@ -76,7 +73,6 @@ public class UserService {
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User updateUser(Long id, UserDTO userDTO) {
-        // TODO: add check for role permission
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("No User was found for id " + id ));
         user.setUsername(userDTO.getUsername());
         user.setRole(Role.valueOf(userDTO.getRoleName()));
@@ -92,7 +88,6 @@ public class UserService {
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public void deleteUser(Long id) {
-        // TODO: add check for role permission
         userRepository.deleteById(id);
     }
 }

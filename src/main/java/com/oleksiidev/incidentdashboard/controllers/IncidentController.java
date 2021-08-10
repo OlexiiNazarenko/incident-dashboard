@@ -25,7 +25,7 @@ public class IncidentController {
 
     @GetMapping("/id/{id}")
     public Incident getIncidentById(@PathVariable Long id) {
-        return incidentService.getIncidentById(id)
+        return incidentService.findIncidentById(id)
                 .orElseThrow(() -> new NotFoundException(Incident.class, id));
     }
 

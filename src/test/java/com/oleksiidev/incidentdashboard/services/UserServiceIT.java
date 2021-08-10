@@ -50,9 +50,10 @@ class UserServiceIT {
     void testGetUserById() {
         User expected = createUserAndSaveToDatabase();
 
-        User actual = userService.getUserById(expected.getId());
+        Optional<User> actual = userService.findUserById(expected.getId());
 
-        assertEquals(actual, expected);
+        assertTrue(actual.isPresent());
+        assertEquals(expected, actual.get());
     }
 
     @Test

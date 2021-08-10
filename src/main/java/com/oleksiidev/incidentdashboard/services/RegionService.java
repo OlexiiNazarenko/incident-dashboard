@@ -16,12 +16,15 @@ public class RegionService {
 
     private final RegionRepository regionRepository;
 
-    public Optional<Region> getRegionById(Long id) {
+    public Optional<Region> findRegionById(Long id) {
         return regionRepository.findById(id);
     }
 
+    public Set<Region> getRegionsByIds(Set<Long> ids) {
+        return regionRepository.findRegionsByIdIn(ids);
+    }
+
     public Set<Region> getAllRegions() {
-        // TODO: Why hash set?
         return new HashSet<>(regionRepository.findAll());
     }
 

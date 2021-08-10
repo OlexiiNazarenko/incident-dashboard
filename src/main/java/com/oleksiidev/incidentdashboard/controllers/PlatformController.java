@@ -25,7 +25,7 @@ public class PlatformController {
 
     @GetMapping("/id/{id}")
     public Platform getPlatformById(@PathVariable @NonNull Long id) {
-        return platformService.getPlatformById(id)
+        return platformService.findPlatformById(id)
                 .orElseThrow(() -> new NotFoundException(Platform.class, id));
     }
 
