@@ -2,6 +2,7 @@ package com.oleksiidev.incidentdashboard.dto;
 
 import lombok.Data;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Data
@@ -11,6 +12,6 @@ public class IncidentDTO {
     private long componentId;
     private String status;
     private String description;
-    private Date startDate;
-    private Date endDate;
+    private ZonedDateTime startDate;
+    private ZonedDateTime endDate;
 }

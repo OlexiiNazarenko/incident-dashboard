@@ -11,7 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @EqualsAndHashCode (callSuper = true)
 @ToString (callSuper = true)
@@ -40,8 +40,8 @@ public class Incident extends BaseModel {
     private String description;
 
     @Column(name = "`StartDate`")
-    private Date startDate;
+    private ZonedDateTime startDate;
 
     @Column(name = "`EndDate`")
-    private Date endDate;
+    private ZonedDateTime endDate;
 }

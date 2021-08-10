@@ -19,11 +19,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.AdditionalMatchers.gt;
@@ -37,8 +36,8 @@ class IncidentServiceTest {
     private final Incident incident2;
     private final Incident incident3;
     private final Incident incident4;
-    private final Date startDate = new Date(System.currentTimeMillis());
-    private final Date endDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1));
+    private final ZonedDateTime startDate = ZonedDateTime.now();
+    private final ZonedDateTime endDate = ZonedDateTime.now().plusDays(1);
 
     public IncidentServiceTest(@Mock IncidentRepository incidentRepository,
                                @Mock UserService userService,
