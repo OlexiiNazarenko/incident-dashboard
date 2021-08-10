@@ -16,6 +16,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.AdditionalMatchers.gt;
 
 @ExtendWith (MockitoExtension.class)
 class RegionServiceTest {
@@ -52,22 +53,41 @@ class RegionServiceTest {
 
         Mockito.when(regionRepository.findById(1L)).thenReturn(Optional.of(region1));
         Mockito.when(regionRepository.findById(2L)).thenReturn(Optional.of(region2));
+        Mockito.when(regionRepository.findRegionsByIdIn(Sets.newHashSet(1L, 2L))).thenReturn(Sets.newHashSet(region1, region2));
+        Mockito.when(regionRepository.findRegionsByIdIn(Sets.newHashSet(1L, gt(4L)))).thenReturn(Sets.newHashSet(region1));
         Mockito.when(regionRepository.findAll()).thenReturn(Arrays.asList(region1, region2));
         Mockito.when(regionRepository.save(regionToSave)).thenReturn(savedRegion);
         Mockito.when(regionRepository.save(updatedRegion1)).thenReturn(updatedRegion1);
     }
 
     @Test
-    void testGetRegionById_Success() {
+    void testFindRegionById_Success() {
         Optional<Region> actual = regionService.findRegionById(1L);
         assertTrue(actual.isPresent());
         assertEquals(actual.get(), region1);
     }
 
     @Test
-    void testGetRegionById_ReturnNullForInappropriateId() {
+    void testFindRegionById_ReturnNullForInappropriateId() {
         Optional<Region> actual = regionService.findRegionById(4L);
         assertFalse(actual.isPresent());
+    }
+
+    @Test
+    void testGetRegionsByIds_Success() {
+        Set<Region> actual = regionService.getRegionsByIds(Sets.newHashSet(1L, 2L));
+        assertFalse(actual.isEmpty());
+        assertEquals(Sets.newHashSet(region1, region2), actual);
+
+        actual = regionService.getRegionsByIds(Sets.newHashSet(1L, 5L));
+        assertFalse(actual.isEmpty());
+        assertEquals(Sets.newHashSet(region1), actual);
+    }
+
+    @Test
+    void testGetRegionsByIds_ReturnNullForInappropriateId() {
+        Set<Region> actual = regionService.getRegionsByIds(Sets.newHashSet(99L, 100L));
+        assertTrue(actual.isEmpty());
     }
 
     @Test

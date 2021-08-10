@@ -3,7 +3,6 @@ package com.oleksiidev.incidentdashboard.services;
 import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.model.Service;
-import com.oleksiidev.incidentdashboard.repositories.PlatformRepository;
 import com.oleksiidev.incidentdashboard.repositories.ServiceRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -100,7 +99,7 @@ class ServiceServiceTest {
     void testGetServiceById_Success() {
         Optional<Service> actual = serviceService.findServiceById(1L);
         assertTrue(actual.isPresent());
-        assertEquals(actual.get(), service1p1);
+        assertEquals(service1p1, actual.get());
     }
 
     @Test
@@ -112,9 +111,10 @@ class ServiceServiceTest {
     @Test
     void testGetServicesByPlatformId_Success() {
         List<Service> servicesForPlatform1 = serviceService.getServicesByPlatformId(1L);
-        assertEquals(servicesForPlatform1, Arrays.asList(service1p1, service2p1));
+        assertEquals(Arrays.asList(service1p1, service2p1), servicesForPlatform1);
+
         List<Service> servicesForPlatform2 = serviceService.getServicesByPlatformId(2L);
-        assertEquals(servicesForPlatform2, Collections.singletonList(service3p2));
+        assertEquals(Collections.singletonList(service3p2), servicesForPlatform2);
     }
 
     @Test
@@ -125,7 +125,7 @@ class ServiceServiceTest {
     @Test
     void testCreateService_Success() {
         Service actual = serviceService.createService(2L, NEW_SERVICE_NAME);
-        assertEquals(actual, savedService);
+        assertEquals(savedService, actual);
     }
 
     @Test
@@ -136,7 +136,7 @@ class ServiceServiceTest {
     @Test
     void testUpdateServiceName_Success() {
         Service actual = serviceService.updateServiceName(1L, UPDATED_SERVICE_NAME);
-        assertEquals(actual, updatedService1);
+        assertEquals(updatedService1, actual);
     }
 
     @Test
@@ -147,11 +147,11 @@ class ServiceServiceTest {
     @Test
     void testUpdateServicePlatform() {
         Service actual = serviceService.updateServicePlatform(2L, PLATFORM_ID_TO_UPDATE_SERVICE);
-        assertEquals(actual, updatedService2);
+        assertEquals(updatedService2, actual);
     }
 
     @Test
     void testUpdateServicePlatform_ThrowPlatformNotFoundExceptionForInappropriatePlatformId() {
-        assertThrows(NotFoundException.class, () -> serviceService.updateServicePlatform(2l, 9L));
+        assertThrows(NotFoundException.class, () -> serviceService.updateServicePlatform(2L, 9L));
     }
 }

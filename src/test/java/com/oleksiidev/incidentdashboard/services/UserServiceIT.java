@@ -63,27 +63,27 @@ class UserServiceIT {
 
         List<User> actual = userService.getAllUsers();
 
-        assertEquals(actual, Arrays.asList(user1, user2));
+        assertEquals(Arrays.asList(user1, user2), actual);
     }
 
     @Test
     void testGetUserByEmail() {
         User expected = createUserAndSaveToDatabase();
 
-        User actual = userService.getUserByEmail(expected.getEmail())
-                .orElseThrow(() -> new NotFoundException("Saved User was not found in database by email"));
+        Optional<User> actual = userService.getUserByEmail(expected.getEmail());
 
-        assertEquals(actual, expected);
+        assertTrue(actual.isPresent());
+        assertEquals(expected, actual.get());
     }
 
     @Test
     void testGetUserByUsername() {
         User expected = createUserAndSaveToDatabase();
 
-        User actual = userService.getUserByUsername(expected.getUsername())
-                .orElseThrow(() -> new NotFoundException("Saved User was not found in database by username"));
+        Optional<User> actual = userService.getUserByUsername(expected.getUsername());
 
-        assertEquals(actual, expected);
+        assertTrue(actual.isPresent());
+        assertEquals(expected, actual.get());
     }
 
     @Test
@@ -93,7 +93,7 @@ class UserServiceIT {
 
         User actual = userService.authenticate(user.getUsername(), password);
 
-        assertEquals(actual, user);
+        assertEquals(user, actual);
     }
 
     @Test
@@ -110,9 +110,9 @@ class UserServiceIT {
         User actual = userService.createUser(userDTO);
 
         assertNotNull(actual);
-        assertEquals(actual.getUsername(), username);
-        assertEquals(actual.getEmail(), email);
-        assertEquals(actual.getRole(), role);
+        assertEquals(username, actual.getUsername());
+        assertEquals(email, actual.getEmail());
+        assertEquals(role, actual.getRole());
         assertNotNull(actual.getPassword());
     }
 
@@ -129,8 +129,8 @@ class UserServiceIT {
 
         User actual = userService.registerUser(registrationDTO);
 
-        assertEquals(actual.getUsername(), username);
-        assertEquals(actual.getEmail(), email);
+        assertEquals(username, actual.getUsername());
+        assertEquals(email, actual.getEmail());
         assertTrue(passwordEncoder.matches(password, actual.getPassword()));
     }
 
@@ -142,10 +142,10 @@ class UserServiceIT {
 
         User actual = userService.updateUser(user1.getId(), userDTO);
 
-        assertEquals(actual.getId(), user1.getId());
-        assertEquals(actual.getUsername(), user2.getUsername());
-        assertEquals(actual.getEmail(), user2.getEmail());
-        assertEquals(actual.getPassword(), user1.getPassword());
+        assertEquals(user1.getId(), actual.getId());
+        assertEquals(user2.getUsername(), actual.getUsername());
+        assertEquals(user2.getEmail(), actual.getEmail());
+        assertEquals(user1.getPassword(), actual.getPassword());
     }
 
     @Test
@@ -165,7 +165,7 @@ class UserServiceIT {
 
         userService.deleteUser(user.getId());
 
-        assertEquals(userRepository.findById(user.getId()), Optional.empty());
+        assertEquals(Optional.empty(), userRepository.findById(user.getId()));
     }
 
     private User createUser() {

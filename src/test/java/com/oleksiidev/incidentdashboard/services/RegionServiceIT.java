@@ -1,8 +1,9 @@
 package com.oleksiidev.incidentdashboard.services;
 
-import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.repositories.RegionRepository;
+import org.apache.commons.lang3.RandomStringUtils;
+import com.google.common.collect.Sets;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,8 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,11 +24,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles ("test")
 class RegionServiceIT {
 
-    @Autowired
-    private RegionService regionService;
+    private final RegionService regionService;
+    private final RegionRepository regionRepository;
 
     @Autowired
-    private RegionRepository regionRepository;
+    public RegionServiceIT(RegionService regionService, RegionRepository regionRepository) {
+        this.regionService = regionService;
+        this.regionRepository = regionRepository;
+    }
 
     @AfterEach
     void tearDown() {
@@ -37,28 +40,45 @@ class RegionServiceIT {
 
     @Test
     void testGetRegionById() {
-        String name = "Test Region 1";
-        Region region = new Region();
-        region.setName(name);
+        Region expected = regionRepository.save(createRegion());
 
-        Region expected = regionRepository.save(region);
-        Region actual = regionService.findRegionById(region.getId())
-                .orElseThrow(() -> new NotFoundException("Saved region was not found in database by id"));
+        Optional<Region> actual = regionService.findRegionById(expected.getId());
 
-        assertEquals(actual, expected);
+        assertTrue(actual.isPresent());
+        assertEquals(expected, actual.get());
     }
 
     @Test
-    void testGetAllRegions() {
-        Region region1 = new Region();
-        region1.setName("Test Region 1");
-        Region region2 = new Region();
-        region2.setName("Test Region 2");
+    void testGetRegionsByIds() {
+        Region region1 = regionRepository.save(createRegion());
+        Region region2 = regionRepository.save(createRegion());
+        Region region3 = regionRepository.save(createRegion());
 
-        Set<Region> expected = new HashSet<>(regionRepository.saveAll(Arrays.asList(region1, region2)));
+        Set<Region> actual = regionService.getRegionsByIds(Sets.newHashSet(region1.getId(), region2.getId(), region3.getId()));
+        assertFalse(actual.isEmpty());
+        assertEquals(Sets.newHashSet(region1, region2, region3), actual);
+
+        actual = regionService.getRegionsByIds(Sets.newHashSet(region1.getId(), region2.getId()));
+        assertFalse(actual.isEmpty());
+        assertEquals(Sets.newHashSet(region1, region2), actual);
+
+        actual = regionService.getRegionsByIds(Sets.newHashSet(region1.getId(), Long.MAX_VALUE));
+        assertFalse(actual.isEmpty());
+        assertEquals(Sets.newHashSet(region1), actual);
+
+        actual = regionService.getRegionsByIds(Sets.newHashSet(Long.MAX_VALUE, Long.MAX_VALUE - 1, Long.MAX_VALUE - 2));
+        assertTrue(actual.isEmpty());
+    }
+
+
+    @Test
+    void testGetAllRegions() {
+        Region region1 = regionRepository.save(createRegion());
+        Region region2 = regionRepository.save(createRegion());
+
         Set<Region> actual = regionService.getAllRegions();
 
-        assertEquals(actual, expected);
+        assertEquals(Sets.newHashSet(region1, region2), actual);
     }
 
     @Test
@@ -71,26 +91,28 @@ class RegionServiceIT {
 
     @Test
     void testUpdateRegionName() {
-        String name = "Test Region 1";
-        Region region = new Region();
-        region.setName(name);
-        Long savedId = regionRepository.save(region).getId();
+        Region region = regionRepository.save(createRegion());
 
-        String newName = "Test Region 2";
-        Region actual = regionService.updateRegionName(savedId, newName);
+        String newName = "New Name";
+        Region updatedRegion = regionService.updateRegionName(region.getId(), newName);
 
-        assertEquals(actual.getName(), newName);
+        assertNotNull(updatedRegion);
+        assertEquals(region.getId(), updatedRegion.getId());
+        assertEquals(newName, updatedRegion.getName());
     }
 
     @Test
     void testDeleteRegion() {
-        String name = "Test Region 1";
-        Region region = new Region();
-        region.setName(name);
-        Long savedId = regionRepository.save(region).getId();
+        Long savedId = regionRepository.save(createRegion()).getId();
 
         regionService.deleteRegion(savedId);
 
-        assertNull(regionRepository.findById(savedId));
+        assertEquals(Optional.empty(), regionRepository.findById(savedId));
+    }
+
+    private Region createRegion() {
+        Region region = new Region();
+        region.setName(RandomStringUtils.randomAlphabetic(12));
+        return region;
     }
 }

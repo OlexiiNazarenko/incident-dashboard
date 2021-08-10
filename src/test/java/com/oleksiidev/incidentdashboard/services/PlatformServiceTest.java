@@ -60,7 +60,7 @@ class PlatformServiceTest {
     void testGetPlatformById_Success() {
         Optional<Platform> actual = platformService.findPlatformById(1L);
         assertTrue(actual.isPresent());
-        assertEquals(actual.get(), platform1);
+        assertEquals(platform1, actual.get());
     }
 
     @Test
@@ -72,24 +72,23 @@ class PlatformServiceTest {
     @Test
     void getAllPlatforms() {
         List<Platform> actual = platformService.getAllPlatforms();
-        assertEquals(actual, Arrays.asList(platform1, platform2));
+        assertEquals(Arrays.asList(platform1, platform2), actual);
     }
 
     @Test
     void testCreatePlatform() {
         Platform actual = platformService.createPlatform(NEW_PLATFORM_NAME);
-        assertEquals(actual, savedPlatform);
+        assertEquals(savedPlatform, actual);
     }
 
     @Test
     void testUpdatePlatform_Success() {
         Platform actual = platformService.updatePlatform(1L, UPDATED_PLATFORM_NAME);
-        assertEquals(actual, updatedPlatform1);
+        assertEquals(updatedPlatform1, actual);
     }
 
     @Test
     void testUpdatePlatform_ThrowNotFoundExceptionForInappropriateId() {
         assertThrows(NotFoundException.class, () -> platformService.updatePlatform(4L, UPDATED_PLATFORM_NAME));
-
     }
 }

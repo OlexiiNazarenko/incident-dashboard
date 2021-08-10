@@ -12,10 +12,7 @@ import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.model.Role;
 import com.oleksiidev.incidentdashboard.model.Service;
 import com.oleksiidev.incidentdashboard.model.User;
-import com.oleksiidev.incidentdashboard.repositories.ComponentRepository;
 import com.oleksiidev.incidentdashboard.repositories.IncidentRepository;
-import com.oleksiidev.incidentdashboard.repositories.IncidentTypeRepository;
-import com.oleksiidev.incidentdashboard.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -150,7 +147,7 @@ class IncidentServiceTest {
     void testGetIncidentById_Success() {
         Optional<Incident> actual = incidentService.findIncidentById(1L);
         assertTrue(actual.isPresent());
-        assertEquals(actual.get(), incident1);
+        assertEquals(incident1, actual.get());
     }
 
     @Test

@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,7 +48,7 @@ class PlatformServiceIT {
         Platform actual = platformService.findPlatformById(expected.getId())
                 .orElseThrow(() -> new NotFoundException("Saved Platform was not found in database by id"));
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -61,7 +62,7 @@ class PlatformServiceIT {
         List<Platform> expected = platformRepository.saveAll(Arrays.asList(platform1, platform2));
         List<Platform> actual = platformService.getAllPlatforms();
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -69,7 +70,7 @@ class PlatformServiceIT {
         String name = "Platform Name";
         Platform actual = platformService.createPlatform(name);
 
-        assertEquals(actual.getName(), name);
+        assertEquals(name, actual.getName());
     }
 
     @Test
@@ -82,7 +83,7 @@ class PlatformServiceIT {
         String newName = "New Platform Name";
         Platform actual = platformService.updatePlatform(savedId, newName);
 
-        assertEquals(actual.getName(), newName);
+        assertEquals(newName, actual.getName());
     }
 
     @Test
@@ -93,6 +94,6 @@ class PlatformServiceIT {
 
         platformService.deletePlatform(savedId);
 
-        assertNull(platformRepository.findById(savedId));
+        assertEquals(Optional.empty(), platformRepository.findById(savedId));
     }
 }

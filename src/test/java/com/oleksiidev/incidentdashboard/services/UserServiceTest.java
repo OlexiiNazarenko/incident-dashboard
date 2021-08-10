@@ -122,7 +122,7 @@ class UserServiceTest {
     void testGetUserByEmail_Success() {
         Optional<User> actual = userService.getUserByEmail(USER_1_EMAIL);
         assertTrue(actual.isPresent());
-        assertEquals(actual.get(), user1);
+        assertEquals(user1, actual.get());
     }
 
     @Test
@@ -135,7 +135,7 @@ class UserServiceTest {
     void getUserByUsername_Success() {
         Optional<User> actual = userService.getUserByUsername(USER_1_USERNAME);
         assertTrue(actual.isPresent());
-        assertEquals(actual.get(), user1);
+        assertEquals(user1, actual.get());
     }
 
     @Test
@@ -147,7 +147,7 @@ class UserServiceTest {
     @Test
     void testAuthenticate_Success() {
         User actual = userService.authenticate(USER_1_USERNAME, USER_1_PASSWORD);
-        assertEquals(actual, user1);
+        assertEquals(user1, actual);
     }
 
     @Test
@@ -171,7 +171,7 @@ class UserServiceTest {
 
         User actual = userService.createUser(userDTO);
 
-        assertEquals(actual, user2);
+        assertEquals(user2, actual);
     }
 
     @Test
@@ -184,7 +184,7 @@ class UserServiceTest {
 
         User actual = userService.registerUser(registrationDTO);
 
-        assertEquals(actual, user4);
+        assertEquals(user4, actual);
     }
 
     @Test
@@ -196,7 +196,7 @@ class UserServiceTest {
 
         User actual = userService.updateUser(2L, userDTO);
 
-        assertEquals(actual, user3);
+        assertEquals(user3, actual);
     }
 
     @Test
@@ -213,7 +213,7 @@ class UserServiceTest {
     @Disabled
     void testUpdateUserPassword_Success() {
         User actual = userService.updateUserPassword(USER_2_USERNAME, USER_2_NEW_PASSWORD);
-        assertEquals(actual, user2WithPassword);
+        assertEquals(user2WithPassword, actual);
     }
 
     @Test

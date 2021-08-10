@@ -87,7 +87,7 @@ class IncidentServiceIT {
         Optional<Incident> actual = incidentService.findIncidentById(expected.getId());
 
         assertTrue(actual.isPresent());
-        assertEquals(actual.get(), expected);
+        assertEquals(expected, actual.get());
     }
 
     @Test
@@ -98,7 +98,7 @@ class IncidentServiceIT {
 
         List<Incident> actual = incidentService.getIncidentsByStatus(IncidentStatus.OPEN.name());
 
-        assertEquals(actual, Arrays.asList(incident1, incident2));
+        assertEquals(Arrays.asList(incident1, incident2), actual);
     }
 
     @Test
@@ -108,7 +108,7 @@ class IncidentServiceIT {
 
         List<Incident> actual = incidentService.getIncidentsByComponentId(component.getId());
 
-        assertEquals(actual, Collections.singletonList(incident));
+        assertEquals(Collections.singletonList(incident), actual);
     }
 
     @Test
@@ -132,13 +132,13 @@ class IncidentServiceIT {
 
         Incident incident = incidentService.createIncident(incidentDTO);
 
-        assertEquals(incident.getType(), incidentType);
-        assertEquals(incident.getCreator(), user);
-        assertEquals(incident.getComponent(), component);
-        assertEquals(incident.getDescription(), description);
-        assertEquals(incident.getStatus(), status);
-        assertEquals(incident.getStartDate(), startDate);
-        assertEquals(incident.getEndDate(), endDate);
+        assertEquals(incidentType, incident.getType());
+        assertEquals(user, incident.getCreator());
+        assertEquals(component, incident.getComponent());
+        assertEquals(description, incident.getDescription());
+        assertEquals(status, incident.getStatus());
+        assertEquals(startDate, incident.getStartDate());
+        assertEquals(endDate, incident.getEndDate());
     }
 
     @Test
@@ -157,14 +157,14 @@ class IncidentServiceIT {
 
         Incident actual = incidentService.updateIncident(incident1.getId(), incidentDTO);
 
-        assertEquals(actual.getId(), incident1.getId());
-        assertEquals(actual.getType(), incident2.getType());
-        assertEquals(actual.getCreator(), incident2.getCreator());
-        assertEquals(actual.getComponent(), incident2.getComponent());
-        assertEquals(actual.getDescription(), incident2.getDescription());
-        assertEquals(actual.getStatus(), incident2.getStatus());
-        assertEquals(actual.getStartDate(), incident2.getStartDate());
-        assertEquals(actual.getEndDate(), incident2.getEndDate());
+        assertEquals(incident1.getId(), actual.getId());
+        assertEquals(incident2.getType(), actual.getType());
+        assertEquals(incident2.getCreator(), actual.getCreator());
+        assertEquals(incident2.getComponent(), actual.getComponent());
+        assertEquals(incident2.getDescription(), actual.getDescription());
+        assertEquals(incident2.getStatus(), actual.getStatus());
+        assertEquals(incident2.getStartDate(), actual.getStartDate());
+        assertEquals(incident2.getEndDate(), actual.getEndDate());
     }
 
     @Test
@@ -173,7 +173,7 @@ class IncidentServiceIT {
         assertNotNull(incidentRepository.findById(incident.getId()));
 
         incidentService.deleteIncident(incident.getId());
-        assertNull(incidentRepository.findById(incident.getId()));
+        assertEquals(Optional.empty(), incidentRepository.findById(incident.getId()));
     }
 
     private Incident createIncident(IncidentType type,

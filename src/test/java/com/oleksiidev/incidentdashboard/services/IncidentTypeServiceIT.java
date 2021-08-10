@@ -43,10 +43,10 @@ class IncidentTypeServiceIT {
     void testGetIncidentTypeById() {
         IncidentType expected = createIncidentTypeAndSaveToDatabase();
 
-        IncidentType actual = incidentTypeService.getIncidentTypeById(expected.getId())
-                .orElseThrow(() -> new NotFoundException("Saved Incident Type was not found in database by its id."));
+        Optional<IncidentType> actual = incidentTypeService.findIncidentTypeById(expected.getId());
 
-        assertEquals(actual, expected);
+        assertTrue(actual.isPresent());
+        assertEquals(expected, actual.get());
     }
 
     @Test
@@ -57,7 +57,7 @@ class IncidentTypeServiceIT {
         List<IncidentType> expected = Arrays.asList(incidentType1, incidentType2);
         List<IncidentType> actual = incidentTypeService.getAllIncidentTypes();
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -65,7 +65,7 @@ class IncidentTypeServiceIT {
         String name = "Incident Type";
         IncidentType actual = incidentTypeService.createIncidentType(name);
 
-        assertEquals(actual.getName(), name);
+        assertEquals(name, actual.getName());
     }
 
     @Test
@@ -75,7 +75,7 @@ class IncidentTypeServiceIT {
         String newName = "New Incident Type Name";
         IncidentType actual = incidentTypeService.updateIncidentTypeName(incidentType.getId(), newName);
 
-        assertEquals(actual.getName(), newName);
+        assertEquals(newName, actual.getName());
     }
 
     @Test
@@ -84,7 +84,7 @@ class IncidentTypeServiceIT {
 
         incidentTypeService.deleteIncidentType(incidentType.getId());
 
-        assertEquals(incidentTypeRepository.findById(incidentType.getId()), Optional.empty());
+        assertEquals(Optional.empty(), incidentTypeRepository.findById(incidentType.getId()));
     }
 
     private IncidentType createIncidentType(String name) {

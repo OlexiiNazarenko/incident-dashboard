@@ -1,7 +1,6 @@
 package com.oleksiidev.incidentdashboard.services;
 
 import com.oleksiidev.incidentdashboard.dto.ComponentDTO;
-import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Component;
 import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.model.Region;
@@ -63,10 +62,9 @@ class ComponentServiceIT {
     @Test
     void testGetComponentById() {
         Component expected = createComponentAndSaveToDatabase();
-        Component actual = componentService.findComponentById(expected.getId())
-                .orElseThrow(() -> new NotFoundException("Saved Incident Type was not found in database by its id."));
-        Set<Region> regions = actual.getRegions();
-        assertEquals(actual, expected);
+        Optional<Component> actual = componentService.findComponentById(expected.getId());
+        assertTrue(actual.isPresent());
+        assertEquals(expected, actual.get());
     }
 
     @Test
@@ -78,7 +76,7 @@ class ComponentServiceIT {
 
         List<Component> actual = componentService.getAllComponents();
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -110,9 +108,9 @@ class ComponentServiceIT {
         Component component = componentService.createComponent(componentDTO);
 
         assertNotNull(component);
-        assertEquals(component.getName(), componentName);
-        assertEquals(component.getService(), service);
-        assertEquals(component.getRegions(), Sets.newHashSet(region1, region2));
+        assertEquals(componentName, component.getName());
+        assertEquals(service, component.getService());
+        assertEquals(Sets.newHashSet(region1, region2), component.getRegions());
     }
 
     @Test
@@ -122,7 +120,7 @@ class ComponentServiceIT {
 
         Component actual = componentService.updateComponent(component.getId(), componentToDTO(newComponent));
 
-        assertEquals(actual, newComponent);
+        assertEquals(newComponent, actual);
 
     }
 
@@ -132,7 +130,7 @@ class ComponentServiceIT {
 
         componentService.deleteComponent(component.getId());
 
-        assertEquals(componentRepository.findById(component.getId()), Optional.empty());
+        assertEquals(Optional.empty(), componentRepository.findById(component.getId()));
     }
 
     private Component createComponent() {
