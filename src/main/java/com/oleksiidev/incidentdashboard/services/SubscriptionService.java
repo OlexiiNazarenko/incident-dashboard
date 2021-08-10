@@ -11,6 +11,7 @@ import com.oleksiidev.incidentdashboard.model.Subscription;
 import com.oleksiidev.incidentdashboard.repositories.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,12 @@ public class SubscriptionService {
     private final ComponentService componentService;
 
     public boolean createSubscription(SubscriptionDTO subscriptionDTO) {
+        boolean result = false;
+
+        if (StringUtils.isBlank(subscriptionDTO.getEmail())) {
+            throw new IllegalArgumentException("Email cannot be blank");
+        }
+
         Platform platform = platformService.findPlatformById(subscriptionDTO.getPlatformId())
                 .orElseThrow(() -> new NotFoundException(Platform.class, subscriptionDTO.getPlatformId()));
 
@@ -36,7 +43,7 @@ public class SubscriptionService {
             Service service = serviceService.findServiceById(serviceId)
                     .orElseThrow(() -> new NotFoundException(Service.class, serviceId));
 
-            if(service.getPlatform().getId() != subscriptionDTO.getPlatformId()) continue;
+            if(!service.getPlatform().getId().equals(subscriptionDTO.getPlatformId())) continue;
 
             for (Long regionId : subscriptionDTO.getRegionIds()) {
                 if (!getAllRegionIdsForService(service).contains(regionId)) continue;
@@ -55,26 +62,28 @@ public class SubscriptionService {
                     newSubscription.setRegion(region);
 
                     subscriptionRepository.save(newSubscription);
+                    result = true;
                 }
             }
         }
 
-        return true;
+        return result;
     }
 
-    public boolean deleteAllSubscriptionsForEmail(String email) {
+    public void deleteAllSubscriptionsForEmail(String email) {
         List<Subscription> subscriptions = subscriptionRepository.findSubscriptionsByEmail(email);
         subscriptionRepository.deleteAll(subscriptions);
-        return true;
     }
 
     private Set<Long> getAllRegionIdsForService(Service service) {
         Set<Long> ids = new HashSet<>();
+
         List<Component> components = componentService.getComponentsByServiceId(service.getId());
-        if (ObjectUtils.isEmpty(components)) {
-            throw new NotFoundException("No Components were found for Service: " + service.getName());
-        }
-        components.forEach(c -> ids.add(c.getId()));
+
+        if (ObjectUtils.isEmpty(components)) throw new NotFoundException("No Components were found for Service: " + service.getName());
+
+        components.forEach(c -> c.getRegions().forEach(r -> ids.add(r.getId())));
+
         return ids;
     }
 }

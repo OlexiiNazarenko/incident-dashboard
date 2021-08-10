@@ -4,7 +4,6 @@ import com.oleksiidev.incidentdashboard.dto.SubscriptionDTO;
 import com.oleksiidev.incidentdashboard.services.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +21,7 @@ public class SubscriptionController {
 
     @GetMapping("/unsubscribe")
     public boolean unsubscribe(@RequestParam String email) {
-        return subscriptionService.deleteAllSubscriptionsForEmail(email);
+        subscriptionService.deleteAllSubscriptionsForEmail(email);
+        return true;
     }
 }
