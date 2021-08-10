@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `COMPONENT_REGIONS` (
     PRIMARY KEY (`ID`),
     UNIQUE KEY `fk_componentregiondetails_componentid_regionid` (`ComponentID`, `RegionID`),
     CONSTRAINT `fk_componentregiondetails_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `COMPONENT` (`ID`) ON DELETE CASCADE,
-    CONSTRAINT `fk_componentregiondetails_regionid` FOREIGN KEY (`RegionID`) REFERENCES `REGION` (`ID`)
+    CONSTRAINT `fk_componentregiondetails_regionid` FOREIGN KEY (`RegionID`) REFERENCES `REGION` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `INCIDENT_TYPE` (
@@ -85,8 +85,9 @@ CREATE TABLE IF NOT EXISTS `INCIDENT` (
     KEY `fk_incident_incidenttypeid` (`TypeID`),
     KEY `fk_incident_componentid` (`ComponentID`),
     KEY `fk_incident_userid` (`UserID`),
-    CONSTRAINT `fk_incident_incidenttypeid` FOREIGN KEY (`TypeID`) REFERENCES `INCIDENT_TYPE` (`ID`),
-    CONSTRAINT `fk_incident_userid` FOREIGN KEY (`UserID`) REFERENCES `USER` (`ID`)
+    CONSTRAINT `fk_incident_incidenttypeid` FOREIGN KEY (`TypeID`) REFERENCES `INCIDENT_TYPE` (`ID`) ON DELETE CASCADE,
+    CONSTRAINT `fk_incident_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `COMPONENT` (`ID`) ON DELETE CASCADE,
+    CONSTRAINT `fk_incident_userid` FOREIGN KEY (`UserID`) REFERENCES `USER` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `SUBSCRIPTION` (
@@ -104,9 +105,9 @@ CREATE TABLE IF NOT EXISTS `SUBSCRIPTION` (
     KEY `fk_subscrription_componentid` (`ComponentID`),
     KEY `fk_subscrription_incidenttypeid` (`IncidentTypeID`),
     KEY `fk_subscrription_regionid` (`RegionID`),
-    CONSTRAINT `fk_subscrription_platformid` FOREIGN KEY (`PlatformID`) REFERENCES `PLATFORM` (`ID`),
-    CONSTRAINT `fk_subscrription_serviceid` FOREIGN KEY (`ServiceID`) REFERENCES `SERVICE` (`ID`),
-    CONSTRAINT `fk_subscrription_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `COMPONENT` (`ID`),
-    CONSTRAINT `fk_subscrription_incidenttypeid` FOREIGN KEY (`IncidentTypeID`) REFERENCES `INCIDENT_TYPE` (`ID`),
-    CONSTRAINT `fk_subscrription_regionid` FOREIGN KEY (`RegionID`) REFERENCES `REGION` (`ID`)
+    CONSTRAINT `fk_subscrription_platformid` FOREIGN KEY (`PlatformID`) REFERENCES `PLATFORM` (`ID`) ON DELETE CASCADE,
+    CONSTRAINT `fk_subscrription_serviceid` FOREIGN KEY (`ServiceID`) REFERENCES `SERVICE` (`ID`) ON DELETE CASCADE,
+    CONSTRAINT `fk_subscrription_componentid` FOREIGN KEY (`ComponentID`) REFERENCES `COMPONENT` (`ID`) ON DELETE CASCADE,
+    CONSTRAINT `fk_subscrription_incidenttypeid` FOREIGN KEY (`IncidentTypeID`) REFERENCES `INCIDENT_TYPE` (`ID`) ON DELETE CASCADE,
+    CONSTRAINT `fk_subscrription_regionid` FOREIGN KEY (`RegionID`) REFERENCES `REGION` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
