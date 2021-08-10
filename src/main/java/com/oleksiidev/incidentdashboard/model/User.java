@@ -2,6 +2,7 @@ package com.oleksiidev.incidentdashboard.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
+@EqualsAndHashCode (callSuper = true)
 @Data
 @Entity
 @Table(name = "`USER`")
