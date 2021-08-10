@@ -1,8 +1,9 @@
-package com.oleksiidev.incidentdashboard.services;
+package com.oleksiidev.incidentdashboard.integration.services;
 
 import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.repositories.PlatformRepository;
+import com.oleksiidev.incidentdashboard.services.PlatformService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

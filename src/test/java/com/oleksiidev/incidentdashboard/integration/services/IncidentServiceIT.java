@@ -1,4 +1,4 @@
-package com.oleksiidev.incidentdashboard.services;
+package com.oleksiidev.incidentdashboard.integration.services;
 
 import com.oleksiidev.incidentdashboard.dto.IncidentDTO;
 import com.oleksiidev.incidentdashboard.model.Component;
@@ -17,6 +17,7 @@ import com.oleksiidev.incidentdashboard.repositories.PlatformRepository;
 import com.oleksiidev.incidentdashboard.repositories.RegionRepository;
 import com.oleksiidev.incidentdashboard.repositories.ServiceRepository;
 import com.oleksiidev.incidentdashboard.repositories.UserRepository;
+import com.oleksiidev.incidentdashboard.services.IncidentService;
 import org.apache.commons.compress.utils.Sets;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -45,9 +46,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase (replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles ("test")
 class IncidentServiceIT {
-    private static final ZoneId DATABASE_ZONE = ZoneId.of("+03:00");
-    private static final ZonedDateTime START_DATE = ZonedDateTime.now(DATABASE_ZONE).truncatedTo(ChronoUnit.SECONDS);
-    private static final ZonedDateTime END_DATE = ZonedDateTime.now(DATABASE_ZONE).plusDays(1).truncatedTo(ChronoUnit.SECONDS);
+    private static final ZoneId SYSTEM_ZONE = ZonedDateTime.now().getZone();
+    private static final ZonedDateTime START_DATE = ZonedDateTime.now(SYSTEM_ZONE).truncatedTo(ChronoUnit.SECONDS);
+    private static final ZonedDateTime END_DATE = ZonedDateTime.now(SYSTEM_ZONE).plusDays(1).truncatedTo(ChronoUnit.SECONDS);
 
     private final IncidentRepository incidentRepository;
     private final IncidentService incidentService;
@@ -122,8 +123,6 @@ class IncidentServiceIT {
         Component component = createComponent();
         IncidentStatus status = IncidentStatus.OPEN;
         String description = RandomStringUtils.randomAlphabetic(100);
-        ZonedDateTime startDate = ZonedDateTime.now(DATABASE_ZONE);
-        ZonedDateTime endDate = ZonedDateTime.now(DATABASE_ZONE).plusDays(1);
 
         IncidentDTO incidentDTO = new IncidentDTO();
         incidentDTO.setIncidentTypeId(incidentType.getId());
@@ -141,8 +140,8 @@ class IncidentServiceIT {
         assertEquals(component, incident.getComponent());
         assertEquals(description, incident.getDescription());
         assertEquals(status, incident.getStatus());
-        assertEquals(startDate, incident.getStartDate());
-        assertEquals(endDate, incident.getEndDate());
+        assertEquals(START_DATE, incident.getStartDate());
+        assertEquals(END_DATE, incident.getEndDate());
     }
 
     @Test
@@ -206,8 +205,8 @@ class IncidentServiceIT {
         User creator = createUser();
         IncidentStatus status = IncidentStatus.OPEN;
         String description = RandomStringUtils.randomAlphabetic(100);
-        ZonedDateTime startDate = ZonedDateTime.now(DATABASE_ZONE);
-        ZonedDateTime endDate = ZonedDateTime.now(DATABASE_ZONE).plusDays(1);
+        ZonedDateTime startDate = ZonedDateTime.now(SYSTEM_ZONE);
+        ZonedDateTime endDate = ZonedDateTime.now(SYSTEM_ZONE).plusDays(1);
 
         return createIncident(incidentType, component, creator, status, description, START_DATE, END_DATE);
     }

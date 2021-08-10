@@ -1,9 +1,10 @@
-package com.oleksiidev.incidentdashboard.services;
+package com.oleksiidev.incidentdashboard.integration.services;
 
 import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.model.Service;
 import com.oleksiidev.incidentdashboard.repositories.PlatformRepository;
 import com.oleksiidev.incidentdashboard.repositories.ServiceRepository;
+import com.oleksiidev.incidentdashboard.services.ServiceService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

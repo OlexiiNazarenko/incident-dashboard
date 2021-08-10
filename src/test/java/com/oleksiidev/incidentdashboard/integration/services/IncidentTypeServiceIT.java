@@ -1,8 +1,9 @@
-package com.oleksiidev.incidentdashboard.services;
+package com.oleksiidev.incidentdashboard.integration.services;
 
 import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.IncidentType;
 import com.oleksiidev.incidentdashboard.repositories.IncidentTypeRepository;
+import com.oleksiidev.incidentdashboard.services.IncidentTypeService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,8 @@
-package com.oleksiidev.incidentdashboard.services;
+package com.oleksiidev.incidentdashboard.integration.services;
 
 import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.repositories.RegionRepository;
+import com.oleksiidev.incidentdashboard.services.RegionService;
 import org.apache.commons.lang3.RandomStringUtils;
 import com.google.common.collect.Sets;
 import org.junit.jupiter.api.AfterEach;

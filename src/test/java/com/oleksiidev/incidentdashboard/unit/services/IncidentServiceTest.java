@@ -1,4 +1,4 @@
-package com.oleksiidev.incidentdashboard.services;
+package com.oleksiidev.incidentdashboard.unit.services;
 
 import com.google.common.collect.Sets;
 import com.oleksiidev.incidentdashboard.dto.IncidentDTO;
@@ -13,6 +13,10 @@ import com.oleksiidev.incidentdashboard.model.Role;
 import com.oleksiidev.incidentdashboard.model.Service;
 import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.repositories.IncidentRepository;
+import com.oleksiidev.incidentdashboard.services.ComponentService;
+import com.oleksiidev.incidentdashboard.services.IncidentService;
+import com.oleksiidev.incidentdashboard.services.IncidentTypeService;
+import com.oleksiidev.incidentdashboard.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

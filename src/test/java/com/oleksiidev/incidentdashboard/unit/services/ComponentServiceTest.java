@@ -1,4 +1,4 @@
-package com.oleksiidev.incidentdashboard.services;
+package com.oleksiidev.incidentdashboard.unit.services;
 
 import com.google.common.collect.Sets;
 import com.oleksiidev.incidentdashboard.dto.ComponentDTO;
@@ -8,6 +8,9 @@ import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.model.Service;
 import com.oleksiidev.incidentdashboard.repositories.ComponentRepository;
+import com.oleksiidev.incidentdashboard.services.ComponentService;
+import com.oleksiidev.incidentdashboard.services.RegionService;
+import com.oleksiidev.incidentdashboard.services.ServiceService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

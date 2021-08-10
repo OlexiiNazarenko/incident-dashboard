@@ -1,8 +1,9 @@
-package com.oleksiidev.incidentdashboard.services;
+package com.oleksiidev.incidentdashboard.unit.services;
 
 import com.google.common.collect.Sets;
 import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.repositories.RegionRepository;
+import com.oleksiidev.incidentdashboard.services.RegionService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
