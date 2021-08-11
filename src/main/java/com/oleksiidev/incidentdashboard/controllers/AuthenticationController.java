@@ -7,6 +7,7 @@ import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,12 @@ public class AuthenticationController {
     @PostMapping("/api/login")
     public String auth(@RequestBody AuthenticationDTO authenticationDTO) {
         userService.authenticate(authenticationDTO.getUsername(), authenticationDTO.getPassword());
-        return jwtProvider.generateToken(authenticationDTO.getUsername());
+        return "Bearer:" + jwtProvider.generateToken(authenticationDTO.getUsername());
+    }
+
+    @PatchMapping ("/updatePassword")
+    public boolean updatePassword(@RequestBody AuthenticationDTO authenticationDTO) {
+        userService.updateUserPassword(authenticationDTO.getUsername(), authenticationDTO.getPassword());
+        return true;
     }
 }
