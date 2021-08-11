@@ -29,6 +29,7 @@ public class JwtFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
+
         if (token != null && jwtProvider.validateToken(token)) {
             String userLogin = jwtProvider.getLoginFromToken(token);
             CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(userLogin);
@@ -36,14 +37,17 @@ public class JwtFilter extends GenericFilterBean {
                     null, customUserDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {
         String bearer = request.getHeader(AUTHORIZATION);
+
         if (hasText(bearer) && bearer.startsWith(BEARER)) {
             return bearer.substring(BEARER.length());
         }
+
         return null;
     }
 }

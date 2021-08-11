@@ -42,7 +42,7 @@ public class UserService {
 
     public User authenticate(String username, String password) {
         User user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new NotFoundException("No User was found for username " + username ));
+                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("No User was found for username " + username ));
         if (passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }
