@@ -1,6 +1,6 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
-import com.oleksiidev.incidentdashboard.auth.JwtProvider;
+//import com.oleksiidev.incidentdashboard.auth.JwtProvider;
 import com.oleksiidev.incidentdashboard.dto.AuthenticationDTO;
 import com.oleksiidev.incidentdashboard.dto.RegistrationDTO;
 import com.oleksiidev.incidentdashboard.dto.UpdatePasswordDTO;
@@ -20,27 +20,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final UserService userService;
-    private final JwtProvider jwtProvider;
+//    private final JwtProvider jwtProvider;
 
-    @PostMapping ("/register")
+    @PostMapping ("/api/register")
     public User registerUser(@RequestBody @Validated RegistrationDTO registrationDTO) {
         return userService.registerUser(registrationDTO);
     }
 
-    @PostMapping("/api/login")
-    public String auth(@RequestBody AuthenticationDTO authenticationDTO) {
-        userService.authenticate(authenticationDTO.getUsername(), authenticationDTO.getPassword());
-        return "Bearer:" + jwtProvider.generateToken(authenticationDTO.getUsername());
-    }
+//    @PostMapping("/api/login")
+//    public String auth(@RequestBody AuthenticationDTO authenticationDTO) {
+//        userService.authenticate(authenticationDTO.getUsername(), authenticationDTO.getPassword());
+//        return "Bearer " + jwtProvider.generateToken(authenticationDTO.getUsername());
+//    }
 
-    @PatchMapping ("/updatePassword")
+    @PatchMapping ("/api/updatePassword")
     public boolean updatePassword(@RequestHeader("Authorization") String token,
                                   @RequestBody UpdatePasswordDTO updatePasswordDTO) {
-        if (jwtProvider.getLoginFromToken(token.substring(7)).equals(updatePasswordDTO.getUsername())) {
+//        if (jwtProvider.getLoginFromToken(token.substring(7)).equals(updatePasswordDTO.getUsername())) {
             userService.updateUserPassword(updatePasswordDTO.getUsername(), updatePasswordDTO.getNewPassword());
-        } else {
-            throw new AuthenticationServiceException("Attempt to change password of another account");
-        }
+//        } else {
+//            throw new AuthenticationServiceException("Attempt to change password of another account");
+//        }
         return true;
     }
 }
