@@ -24,6 +24,7 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/auth")
 public class AuthenticationController {
 
@@ -31,7 +32,6 @@ public class AuthenticationController {
     private final UserService userService;
     private final TokenProvider tokenProvider;
 
-    @CrossOrigin("http://localhost:3000")
     @PostMapping("/login")
     public String auth(@RequestBody OAuthLoginRequestDTO oAuthLoginRequestDTO) {
         Authentication authentication = authenticationManager.authenticate(
@@ -46,17 +46,16 @@ public class AuthenticationController {
         return tokenProvider.createToken(authentication);
     }
 
-    @CrossOrigin("http://localhost:3000")
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO registrationDTO) {
-        if(!userService.findUserByEmail(registrationDTO.getEmail()).isPresent()) {
+        if(userService.findUserByEmail(registrationDTO.getEmail()).isEmpty()) {
             throw new BadRequestException("Email address already in use.");
         }
 
         User result = userService.registerUser(registrationDTO);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/user/me")
+                .fromCurrentContextPath().path("/user/current")
                 .buildAndExpand(result.getId()).toUri();
 
         return ResponseEntity.created(location)
