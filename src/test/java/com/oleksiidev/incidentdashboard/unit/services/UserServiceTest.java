@@ -121,27 +121,27 @@ class UserServiceTest {
 
     @Test
     void testGetUserByEmail_Success() {
-        Optional<User> actual = userService.getUserByEmail(USER_1_EMAIL);
+        Optional<User> actual = userService.findUserByEmail(USER_1_EMAIL);
         assertTrue(actual.isPresent());
         assertEquals(user1, actual.get());
     }
 
     @Test
     void testGetUserByEmail_ReturnNullForInappropriateEmail() {
-        Optional<User> actual = userService.getUserByEmail("blabla@email.co");
+        Optional<User> actual = userService.findUserByEmail("blabla@email.co");
         assertFalse(actual.isPresent());
     }
 
     @Test
     void getUserByUsername_Success() {
-        Optional<User> actual = userService.getUserByUsername(USER_1_USERNAME);
+        Optional<User> actual = userService.findUserByUsername(USER_1_USERNAME);
         assertTrue(actual.isPresent());
         assertEquals(user1, actual.get());
     }
 
     @Test
     void getUserByUsername_ReturnNullForInappropriateUsername() {
-        Optional<User> actual = userService.getUserByUsername("blablaUsername");
+        Optional<User> actual = userService.findUserByUsername("blablaUsername");
         assertFalse(actual.isPresent());
     }
 

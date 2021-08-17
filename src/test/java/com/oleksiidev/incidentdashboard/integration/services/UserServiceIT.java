@@ -2,7 +2,6 @@ package com.oleksiidev.incidentdashboard.integration.services;
 
 import com.oleksiidev.incidentdashboard.dto.RegistrationDTO;
 import com.oleksiidev.incidentdashboard.dto.UserDTO;
-import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Role;
 import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.repositories.UserRepository;
@@ -71,7 +70,7 @@ class UserServiceIT {
     void testGetUserByEmail() {
         User expected = createUserAndSaveToDatabase();
 
-        Optional<User> actual = userService.getUserByEmail(expected.getEmail());
+        Optional<User> actual = userService.findUserByEmail(expected.getEmail());
 
         assertTrue(actual.isPresent());
         assertEquals(expected, actual.get());
@@ -81,7 +80,7 @@ class UserServiceIT {
     void testGetUserByUsername() {
         User expected = createUserAndSaveToDatabase();
 
-        Optional<User> actual = userService.getUserByUsername(expected.getUsername());
+        Optional<User> actual = userService.findUserByUsername(expected.getUsername());
 
         assertTrue(actual.isPresent());
         assertEquals(expected, actual.get());
