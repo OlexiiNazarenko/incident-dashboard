@@ -61,10 +61,9 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User registerUser(RegistrationDTO registrationDTO) {
         User newUser = new User();
-        newUser.setUsername(registrationDTO.getUsername());
+        newUser.setUsername(registrationDTO.getName());
         newUser.setRole(Role.ROLE_ADMIN);
         newUser.setEmail(registrationDTO.getEmail());
         newUser.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));

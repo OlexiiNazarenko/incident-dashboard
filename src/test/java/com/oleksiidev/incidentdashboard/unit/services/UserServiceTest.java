@@ -179,7 +179,7 @@ class UserServiceTest {
     @Disabled
     void testRegisterUser() {
         RegistrationDTO registrationDTO = new RegistrationDTO();
-        registrationDTO.setUsername(USER_4_USERNAME);
+        registrationDTO.setName(USER_4_USERNAME);
         registrationDTO.setEmail(USER_4_EMAIL);
         registrationDTO.setPassword(USER_4_PASSWORD);
 

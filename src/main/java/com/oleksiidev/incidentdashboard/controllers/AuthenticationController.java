@@ -2,6 +2,7 @@ package com.oleksiidev.incidentdashboard.controllers;
 
 import com.oleksiidev.incidentdashboard.auth.TokenProvider;
 import com.oleksiidev.incidentdashboard.dto.ApiResponseDTO;
+import com.oleksiidev.incidentdashboard.dto.AuthResponseDTO;
 import com.oleksiidev.incidentdashboard.dto.OAuthLoginRequestDTO;
 import com.oleksiidev.incidentdashboard.dto.RegistrationDTO;
 import com.oleksiidev.incidentdashboard.exceptions.BadRequestException;
@@ -24,7 +25,6 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin("http://localhost:3000")
 @RequestMapping("/auth")
 public class AuthenticationController {
 
@@ -33,7 +33,7 @@ public class AuthenticationController {
     private final TokenProvider tokenProvider;
 
     @PostMapping("/login")
-    public String auth(@RequestBody OAuthLoginRequestDTO oAuthLoginRequestDTO) {
+    public ResponseEntity<?> auth(@RequestBody OAuthLoginRequestDTO oAuthLoginRequestDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         oAuthLoginRequestDTO.getEmail(),
@@ -43,12 +43,13 @@ public class AuthenticationController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return tokenProvider.createToken(authentication);
+        String token = tokenProvider.createToken(authentication);
+        return ResponseEntity.ok(new AuthResponseDTO(token));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO registrationDTO) {
-        if(userService.findUserByEmail(registrationDTO.getEmail()).isEmpty()) {
+    public ResponseEntity<?> signupUser(@RequestBody RegistrationDTO registrationDTO) {
+        if(userService.findUserByEmail(registrationDTO.getEmail()).isPresent()) {
             throw new BadRequestException("Email address already in use.");
         }
 

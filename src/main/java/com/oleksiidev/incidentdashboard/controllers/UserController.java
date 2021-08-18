@@ -30,7 +30,6 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/user/current")
-    @PreAuthorize ("hasRole('ADMIN')")
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
         return userService.findUserById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));

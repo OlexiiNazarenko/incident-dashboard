@@ -123,7 +123,7 @@ class UserServiceIT {
         String password = RandomStringUtils.randomAlphanumeric(12);
 
         RegistrationDTO registrationDTO = new RegistrationDTO();
-        registrationDTO.setUsername(username);
+        registrationDTO.setName(username);
         registrationDTO.setEmail(email);
         registrationDTO.setPassword(password);
 
