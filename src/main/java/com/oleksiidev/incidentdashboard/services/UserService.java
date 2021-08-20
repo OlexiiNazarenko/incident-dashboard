@@ -32,17 +32,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
 
-    public Optional<User> getUserByUsername(String username) {
+    public Optional<User> findUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
     }
 
-    public User authenticate(String username, String password) {
-        User user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("No User was found for username " + username ));
+    public User authenticate(String email, String password) {
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("No User was found for email: " + email ));
         if (passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }
@@ -61,10 +61,9 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User registerUser(RegistrationDTO registrationDTO) {
         User newUser = new User();
-        newUser.setUsername(registrationDTO.getUsername());
+        newUser.setUsername(registrationDTO.getName());
         newUser.setRole(Role.ROLE_ADMIN);
         newUser.setEmail(registrationDTO.getEmail());
         newUser.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));

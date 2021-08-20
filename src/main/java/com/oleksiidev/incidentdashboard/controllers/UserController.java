@@ -1,7 +1,10 @@
 package com.oleksiidev.incidentdashboard.controllers;
 
+import com.oleksiidev.incidentdashboard.auth.CurrentUser;
+import com.oleksiidev.incidentdashboard.auth.UserPrincipal;
 import com.oleksiidev.incidentdashboard.dto.UserDTO;
 import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
+import com.oleksiidev.incidentdashboard.exceptions.ResourceNotFoundException;
 import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,12 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/current")
+    public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+        return userService.findUserById(userPrincipal.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+    }
+
     @GetMapping ("/id/{id}")
     public User getUserById(@PathVariable @NonNull Long id) {
         return userService.findUserById(id)
@@ -38,7 +47,7 @@ public class UserController {
 
     @GetMapping("/email")
     public User getUserByEmail(@RequestBody String email) {
-        return userService.getUserByEmail(email)
+        return userService.findUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Could not find User with email: " + email));
     }
 
