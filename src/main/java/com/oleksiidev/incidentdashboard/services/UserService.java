@@ -40,9 +40,9 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
-    public User authenticate(String username, String password) {
-        User user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("No User was found for username " + username ));
+    public User authenticate(String email, String password) {
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("No User was found for email: " + email ));
         if (passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }

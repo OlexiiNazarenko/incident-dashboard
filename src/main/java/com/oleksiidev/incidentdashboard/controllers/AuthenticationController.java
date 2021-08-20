@@ -3,7 +3,7 @@ package com.oleksiidev.incidentdashboard.controllers;
 import com.oleksiidev.incidentdashboard.auth.TokenProvider;
 import com.oleksiidev.incidentdashboard.dto.ApiResponseDTO;
 import com.oleksiidev.incidentdashboard.dto.AuthResponseDTO;
-import com.oleksiidev.incidentdashboard.dto.OAuthLoginRequestDTO;
+import com.oleksiidev.incidentdashboard.dto.AuthenticationDTO;
 import com.oleksiidev.incidentdashboard.dto.RegistrationDTO;
 import com.oleksiidev.incidentdashboard.exceptions.BadRequestException;
 import com.oleksiidev.incidentdashboard.model.User;
@@ -11,6 +11,7 @@ import com.oleksiidev.incidentdashboard.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,22 +29,18 @@ import java.net.URI;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-    private final AuthenticationManager authenticationManager;
+//    private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final TokenProvider tokenProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<?> auth(@RequestBody OAuthLoginRequestDTO oAuthLoginRequestDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        oAuthLoginRequestDTO.getEmail(),
-                        oAuthLoginRequestDTO.getPassword()
-                )
-        );
+    public ResponseEntity<?> auth(@RequestBody AuthenticationDTO authenticationDTO) {
+        User user = userService.authenticate(authenticationDTO.getEmail(), authenticationDTO.getPassword());
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = tokenProvider.createToken(authentication);
+        String token = tokenProvider.generateToken(user);
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }
 
