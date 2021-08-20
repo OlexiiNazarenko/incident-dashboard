@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `USER` (
     `Username` varchar(255) NOT NULL DEFAULT '',
     `Role` enum('ROLE_ADMIN', 'ROLE_MANAGER') NOT NULL DEFAULT 'ROLE_ADMIN',
     `Email` varchar(255) NOT NULL DEFAULT '',
-    `Password` varchar(255) NOT NULL DEFAULT '',
+    `Password` varchar(255),
     `CreateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `LastUpdateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`ID`),
