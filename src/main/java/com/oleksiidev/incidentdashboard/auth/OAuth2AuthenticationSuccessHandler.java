@@ -24,7 +24,7 @@ import static com.oleksiidev.incidentdashboard.auth.HttpCookieOAuth2Authorizatio
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final TokenProvider tokenProvider;
     private final AppProperties appProperties;
-    private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+    private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
