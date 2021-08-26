@@ -8,7 +8,6 @@ import com.oleksiidev.incidentdashboard.model.IncidentStatus;
 import com.oleksiidev.incidentdashboard.model.IncidentType;
 import com.oleksiidev.incidentdashboard.repositories.IncidentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

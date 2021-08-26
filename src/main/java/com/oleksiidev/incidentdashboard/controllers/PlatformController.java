@@ -32,8 +32,7 @@ public class PlatformController {
 
     @GetMapping("/all")
     public List<Platform> getAllPlatforms() {
-        List<Platform> platforms = platformService.getAllPlatforms();
-        return platforms;
+        return platformService.getAllPlatforms();
     }
 
     @PostMapping("/create")

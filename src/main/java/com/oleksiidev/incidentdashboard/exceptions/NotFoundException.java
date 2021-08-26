@@ -1,7 +1,6 @@
 package com.oleksiidev.incidentdashboard.exceptions;
 
 import com.oleksiidev.incidentdashboard.model.BaseModel;
-import org.springframework.util.StringUtils;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException(String msg) {

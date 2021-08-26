@@ -10,12 +10,6 @@ import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,17 +22,12 @@ import java.net.URI;
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
-
-//    private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final TokenProvider tokenProvider;
 
     @PostMapping("/login")
     public ResponseEntity<?> auth(@RequestBody AuthenticationDTO authenticationDTO) {
         User user = userService.authenticate(authenticationDTO.getEmail(), authenticationDTO.getPassword());
-
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = tokenProvider.generateToken(user);
         return ResponseEntity.ok(new AuthResponseDTO(token));
