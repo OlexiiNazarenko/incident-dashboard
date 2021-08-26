@@ -8,9 +8,14 @@ import com.oleksiidev.incidentdashboard.auth.OAuth2AuthenticationFailureHandler;
 import com.oleksiidev.incidentdashboard.auth.OAuth2AuthenticationSuccessHandler;
 import com.oleksiidev.incidentdashboard.auth.RestAuthenticationEntryPoint;
 import com.oleksiidev.incidentdashboard.auth.TokenAuthenticationFilter;
+import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
+import com.oleksiidev.incidentdashboard.model.Region;
+import com.oleksiidev.incidentdashboard.model.Service;
+import com.oleksiidev.incidentdashboard.services.ServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,6 +27,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -62,9 +72,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**", "/oauth2/**").permitAll()
                 .antMatchers("/health").permitAll()
                 .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
-                .antMatchers("/api/service/platformId/*").permitAll()
-                .antMatchers("/api/component/serviceId/*").permitAll()
-                .antMatchers("/api/platform/all").permitAll()
+                .antMatchers(
+                        "/api/component/id/*",
+                        "/api/component/all",
+                        "/api/component/serviceId/*",
+                        "/api/incident/id/*",
+                        "/api/incident/status/*",
+                        "/api/incident/componentId/*",
+                        "/api/incidentType/all",
+                        "/api/incidentType/id/*",
+                        "/api/service/platformId/*",
+                        "/api/platform/all",
+                        "/api/platform/id/*",
+                        "/api/region/id/*",
+                        "/api/region/all",
+                        "/api/service/all",
+                        "/api/service/platformId/*",
+                        "/api/service/id/*").permitAll()
                 .antMatchers("/",
                         "/error",
                         "/favicon.ico",
