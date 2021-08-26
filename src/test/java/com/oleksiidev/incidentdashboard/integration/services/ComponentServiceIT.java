@@ -121,7 +121,12 @@ class ComponentServiceIT {
 
         Component actual = componentService.updateComponent(component.getId(), componentToDTO(newComponent));
 
-        assertEquals(newComponent, actual);
+        assertAll(
+                () -> assertEquals(newComponent.getName(), actual.getName()),
+                () -> assertEquals(newComponent.getService(), actual.getService()),
+                () -> assertEquals(newComponent.getRegions(), actual.getRegions())
+        );
+
 
     }
 

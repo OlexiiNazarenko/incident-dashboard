@@ -68,9 +68,9 @@ class ServiceServiceIT {
     void testGetServicesByPlatformId() {
         Platform platform = createPlatformAndSaveToDatabase();
 
-        Service service1 = createService(platform);
-        Service service2 = createService(platform);
-        Service service3 = createService(createPlatformAndSaveToDatabase());
+        Service service1 = saveServiceToDatabase(createService(platform));
+        Service service2 = saveServiceToDatabase(createService(platform));
+        Service service3 = saveServiceToDatabase(createService(createPlatformAndSaveToDatabase()));
 
         List<Service> actual = serviceService.getServicesByPlatformId(platform.getId());
 
@@ -133,6 +133,10 @@ class ServiceServiceIT {
         service.setPlatform(platform);
 
         return service;
+    }
+
+    private Service saveServiceToDatabase(Service service) {
+        return serviceRepository.save(service);
     }
 
     private Platform createPlatformAndSaveToDatabase() {

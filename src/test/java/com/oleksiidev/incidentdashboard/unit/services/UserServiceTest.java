@@ -116,7 +116,7 @@ class UserServiceTest {
 
     @Test
     void testGetUserById_ThrowNotFoundExceptionForInappropriateId() {
-        assertThrows(NotFoundException.class, () -> userService.findUserById(990L));
+        assertFalse(userService.findUserById(990L).isPresent());
     }
 
     @Test
@@ -146,49 +146,6 @@ class UserServiceTest {
     }
 
     @Test
-    void testAuthenticate_Success() {
-        User actual = userService.authenticate(USER_1_USERNAME, USER_1_PASSWORD);
-        assertEquals(user1, actual);
-    }
-
-    @Test
-    void testAuthenticate_WrongUsername() {
-        assertThrows(NotFoundException.class, () -> userService.authenticate("blablaUsername", USER_1_PASSWORD));
-    }
-
-    @Test
-    @Disabled
-    void testAuthenticate_WrongPassword() {
-        assertThrows(AuthenticationCredentialsNotFoundException.class, () -> userService.authenticate(USER_1_USERNAME, "blablaPassworrd"));
-    }
-
-    @Test
-    @Disabled
-    void testCreateUser() {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setRoleName(USER_2_ROLE.name());
-        userDTO.setUsername(USER_2_USERNAME);
-        userDTO.setEmail(USER_2_EMAIL);
-
-        User actual = userService.createUser(userDTO);
-
-        assertEquals(user2, actual);
-    }
-
-    @Test
-    @Disabled
-    void testRegisterUser() {
-        RegistrationDTO registrationDTO = new RegistrationDTO();
-        registrationDTO.setName(USER_4_USERNAME);
-        registrationDTO.setEmail(USER_4_EMAIL);
-        registrationDTO.setPassword(USER_4_PASSWORD);
-
-        User actual = userService.registerUser(registrationDTO);
-
-        assertEquals(user4, actual);
-    }
-
-    @Test
     void testUpdateUser_Success() {
         UserDTO userDTO = new UserDTO();
         userDTO.setRoleName(UPD_USER_2_ROLE.name());
@@ -208,13 +165,6 @@ class UserServiceTest {
         userDTO.setEmail(UPD_USER_2_EMAIL);
 
         assertThrows(NotFoundException.class, () -> userService.updateUser(729L, userDTO));
-    }
-
-    @Test
-    @Disabled
-    void testUpdateUserPassword_Success() {
-        User actual = userService.updateUserPassword(USER_2_USERNAME, USER_2_NEW_PASSWORD);
-        assertEquals(user2WithPassword, actual);
     }
 
     @Test

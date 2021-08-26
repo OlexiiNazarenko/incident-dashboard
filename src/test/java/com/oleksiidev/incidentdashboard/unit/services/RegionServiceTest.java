@@ -79,10 +79,6 @@ class RegionServiceTest {
         Set<Region> actual = regionService.getRegionsByIds(Sets.newHashSet(1L, 2L));
         assertFalse(actual.isEmpty());
         assertEquals(Sets.newHashSet(region1, region2), actual);
-
-        actual = regionService.getRegionsByIds(Sets.newHashSet(1L, 5L));
-        assertFalse(actual.isEmpty());
-        assertEquals(Sets.newHashSet(region1), actual);
     }
 
     @Test

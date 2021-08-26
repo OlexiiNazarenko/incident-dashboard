@@ -17,12 +17,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @ExtendWith (value = SpringExtension.class)
 @SpringBootTest
@@ -33,12 +39,19 @@ class UserServiceIT {
     private final UserRepository userRepository;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final WebApplicationContext context;
+    private MockMvc mvc;
 
     @Autowired
-    public UserServiceIT(UserRepository userRepository, UserService userService) {
+    public UserServiceIT(UserRepository userRepository, UserService userService, WebApplicationContext context) {
         this.userRepository = userRepository;
         this.userService = userService;
+        this.context = context;
         this.passwordEncoder = new BCryptPasswordEncoder();
+        this.mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
     }
 
     @AfterEach
@@ -91,13 +104,13 @@ class UserServiceIT {
         String password = RandomStringUtils.randomAlphanumeric(12);
         User user = createUserAndSaveToDatabase(password);
 
-        User actual = userService.authenticate(user.getUsername(), password);
+        User actual = userService.authenticate(user.getEmail(), password);
 
         assertEquals(user, actual);
     }
 
     @Test
-    void testCreateUser() {
+    void testCreateUser() throws Exception {
         String username = RandomStringUtils.randomAlphabetic(12);
         String email = RandomStringUtils.randomAlphabetic(12) + "@email.ok";
         Role role = Role.ROLE_ADMIN;
@@ -109,11 +122,14 @@ class UserServiceIT {
 
         User actual = userService.createUser(userDTO);
 
-        assertNotNull(actual);
-        assertEquals(username, actual.getUsername());
-        assertEquals(email, actual.getEmail());
-        assertEquals(role, actual.getRole());
-        assertNotNull(actual.getPassword());
+        assertAll(
+                () -> assertNotNull(actual),
+                () -> assertEquals(username, actual.getUsername()),
+                () -> assertEquals(email, actual.getEmail()),
+                () -> assertEquals(role, actual.getRole()),
+                () -> assertNotNull(actual.getPassword())
+        );
+
     }
 
     @Test
