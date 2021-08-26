@@ -81,7 +81,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/incident/componentId/*",
                         "/api/incidentType/all",
                         "/api/incidentType/id/*",
-                        "/api/service/platformId/*",
                         "/api/platform/all",
                         "/api/platform/id/*",
                         "/api/region/id/*",
