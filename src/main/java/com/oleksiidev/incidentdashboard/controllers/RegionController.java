@@ -5,6 +5,7 @@ import com.oleksiidev.incidentdashboard.model.Region;
 import com.oleksiidev.incidentdashboard.services.RegionService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,17 +37,20 @@ public class RegionController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public Region createRegion(@RequestBody @NonNull String name) {
         return regionService.createRegion(name);
     }
 
     @PutMapping("/update/id/{id}")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public Region updateregionName(@PathVariable @NonNull Long id,
                                    @RequestParam String newName) {
         return regionService.updateRegionName(id, newName);
     }
 
     @DeleteMapping("/delete/id/{id}")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public void deleteRegion(@PathVariable @NonNull Long id) {
         regionService.deleteRegion(id);
     }

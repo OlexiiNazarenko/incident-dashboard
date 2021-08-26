@@ -5,6 +5,7 @@ import com.oleksiidev.incidentdashboard.model.Platform;
 import com.oleksiidev.incidentdashboard.services.PlatformService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,17 +37,20 @@ public class PlatformController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public Platform createPlatform(@RequestBody String name) {
         return platformService.createPlatform(name);
     }
 
     @PutMapping("/update/id/{id}")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public Platform updatePlatform(@PathVariable @NonNull Long id,
                                    @RequestBody String name) {
         return platformService.updatePlatform(id, name);
     }
 
     @DeleteMapping("/delete/id/{id}")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public void deletePlatform(@PathVariable @NonNull Long id) {
         platformService.deletePlatform(id);
     }

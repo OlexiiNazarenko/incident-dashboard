@@ -5,6 +5,7 @@ import com.oleksiidev.incidentdashboard.model.IncidentType;
 import com.oleksiidev.incidentdashboard.services.IncidentTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping ("/api/incident_type")
+@RequestMapping ("/api/incidentType")
 public class IncidentTypeController {
 
     private final IncidentTypeService incidentTypeService;
@@ -35,18 +36,21 @@ public class IncidentTypeController {
     }
 
     @PostMapping ("/create")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public IncidentType createIncidentType(
             @RequestBody String name) {
         return incidentTypeService.createIncidentType(name);
     }
 
     @PutMapping ("/update/id/{id}")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public IncidentType updateIncidentTypeName(@PathVariable @NonNull Long id,
                                      @RequestBody String name) {
         return incidentTypeService.updateIncidentTypeName(id, name);
     }
 
     @DeleteMapping ("/delete/id/{id}")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public void deleteIncidentType(@PathVariable @NonNull Long id) {
         incidentTypeService.deleteIncidentType(id);
     }

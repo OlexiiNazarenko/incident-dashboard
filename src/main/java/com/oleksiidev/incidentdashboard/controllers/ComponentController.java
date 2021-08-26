@@ -6,6 +6,7 @@ import com.oleksiidev.incidentdashboard.model.Component;
 import com.oleksiidev.incidentdashboard.services.ComponentService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,17 +42,20 @@ public class ComponentController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public Component createComponent(@RequestBody ComponentDTO componentDTO) {
         return componentService.createComponent(componentDTO);
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Component updateComponent(@PathVariable @NonNull Long id,
                                      @RequestBody ComponentDTO componentDTO) {
         return componentService.updateComponent(id, componentDTO);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteComponent(@PathVariable @NonNull Long id) {
         componentService.deleteComponent(id);
     }
