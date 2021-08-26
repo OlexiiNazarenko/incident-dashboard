@@ -3,19 +3,13 @@ package com.oleksiidev.incidentdashboard.configurations;
 import com.oleksiidev.incidentdashboard.auth.CustomOAuth2UserService;
 import com.oleksiidev.incidentdashboard.auth.CustomUserDetailsService;
 import com.oleksiidev.incidentdashboard.auth.HttpCookieOAuth2AuthorizationRequestRepository;
-//import com.oleksiidev.incidentdashboard.auth.JwtFilter;
 import com.oleksiidev.incidentdashboard.auth.OAuth2AuthenticationFailureHandler;
 import com.oleksiidev.incidentdashboard.auth.OAuth2AuthenticationSuccessHandler;
 import com.oleksiidev.incidentdashboard.auth.RestAuthenticationEntryPoint;
 import com.oleksiidev.incidentdashboard.auth.TokenAuthenticationFilter;
-import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
-import com.oleksiidev.incidentdashboard.model.Region;
-import com.oleksiidev.incidentdashboard.model.Service;
-import com.oleksiidev.incidentdashboard.services.ServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,11 +21,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
