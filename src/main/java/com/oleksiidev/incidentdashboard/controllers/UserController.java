@@ -9,6 +9,7 @@ import com.oleksiidev.incidentdashboard.model.User;
 import com.oleksiidev.incidentdashboard.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,17 +53,20 @@ public class UserController {
     }
 
     @PostMapping ("/create")
+    @PreAuthorize ("hasRole('ROLE_MANAGER')")
     public User createUser( @RequestBody UserDTO userDTO) {
         return userService.createUser(userDTO);
     }
 
     @PutMapping ("/update/id/{userId}")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User updateUserById(@PathVariable Long userId,
                                @RequestBody UserDTO userDTO) {
         return userService.updateUser(userId, userDTO);
     }
 
     @DeleteMapping ("/delete/id/{userId}")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public void deleteUserById(@PathVariable Long userId) {
         userService.deleteUser(userId);
     }

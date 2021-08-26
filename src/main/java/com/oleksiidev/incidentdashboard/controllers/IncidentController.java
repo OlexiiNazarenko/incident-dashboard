@@ -5,6 +5,7 @@ import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
 import com.oleksiidev.incidentdashboard.model.Incident;
 import com.oleksiidev.incidentdashboard.services.IncidentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,16 +41,19 @@ public class IncidentController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Incident createIncident(@RequestBody IncidentDTO incidentDTO) {
         return incidentService.createIncident(incidentDTO);
     }
 
     @PutMapping ("/update/id/{incidentId}")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     public Incident updateIncidentById(@PathVariable Long incidentId, @RequestBody IncidentDTO incidentDTO) {
         return incidentService.updateIncident(incidentId, incidentDTO);
     }
 
     @DeleteMapping ("/delete/id/{incidentId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteIncidentById(@PathVariable Long incidentId) {
         incidentService.deleteIncident(incidentId);
     }

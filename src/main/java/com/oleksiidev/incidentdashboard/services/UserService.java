@@ -49,7 +49,6 @@ public class UserService {
         throw new AuthenticationCredentialsNotFoundException("Password doesn't match");
     }
 
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User createUser(UserDTO userDTO) {
         User newUser = new User();
         newUser.setUsername(userDTO.getUsername());
@@ -70,7 +69,6 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public User updateUser(Long id, UserDTO userDTO) {
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("No User was found for id " + id ));
         user.setUsername(userDTO.getUsername());
@@ -85,7 +83,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

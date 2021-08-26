@@ -37,20 +37,17 @@ public class IncidentService {
         return incidentRepository.findIncidentsByComponent_Id(componentId);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Incident createIncident(IncidentDTO incidentDTO) {
         Incident newIncident = new Incident();
         return saveIncident(incidentDTO, newIncident);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Incident updateIncident(Long id, IncidentDTO incidentDTO) {
         Incident incident = incidentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No Incident found for id " + id));
         return saveIncident(incidentDTO, incident);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteIncident(Long id) {
         incidentRepository.deleteById(id);
     }
