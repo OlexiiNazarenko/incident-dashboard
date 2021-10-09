@@ -1,6 +1,7 @@
 package com.oleksiidev.incidentdashboard.controllers.advices;
 
 import com.oleksiidev.incidentdashboard.exceptions.NotFoundException;
+import com.oleksiidev.incidentdashboard.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,5 +28,19 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         String bodyOfResponse = ex.getMessage();
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler (value = {ResourceNotFoundException.class})
+    protected ResponseEntity<Object> handleConflict(ResourceNotFoundException ex, WebRequest request) {
+        String bodyOfResponse = ex.getMessage();
+        return handleExceptionInternal(ex, bodyOfResponse,
+                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler
+    protected ResponseEntity<Object> handleConflict(Exception ex, WebRequest request) {
+        String bodyOfResponse = ex.getMessage();
+        return handleExceptionInternal(ex, bodyOfResponse,
+                new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }
