@@ -26,12 +26,12 @@ public class ServiceService {
 
     public List<Service> getServicesByPlatformId(Long platformId) {
         return serviceRepository.findServicesByPlatform(platformService.findPlatformById(platformId)
-                .orElseThrow(() -> new NotFoundException(Platform.class, platformId)));
+                .orElseThrow(() -> new NotFoundException("Platform", platformId)));
     }
 
     public Service createService(Long platformId, String serviceName) {
         Platform platform = platformService.findPlatformById(platformId)
-                .orElseThrow(() -> new NotFoundException(Platform.class, platformId));
+                .orElseThrow(() -> new NotFoundException("Platform", platformId));
 
         Service newService = new Service();
         newService.setName(serviceName);
@@ -42,7 +42,7 @@ public class ServiceService {
 
     public Service updateServiceName(Long id, String newName) {
         Service service = serviceRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(Service.class, id));
+                .orElseThrow(() -> new NotFoundException("Service", id));
 
         service.setName(newName);
 
@@ -51,9 +51,9 @@ public class ServiceService {
 
     public Service updateServicePlatform(Long serviceId, Long platformId) {
         Service service = serviceRepository.findById(serviceId)
-                .orElseThrow(() -> new NotFoundException(Service.class, serviceId));
+                .orElseThrow(() -> new NotFoundException("Service", serviceId));
         Platform platform = platformService.findPlatformById(platformId)
-                .orElseThrow(() -> new NotFoundException(Platform.class, platformId));
+                .orElseThrow(() -> new NotFoundException("Platform", platformId));
 
         service.setPlatform(platform);
 

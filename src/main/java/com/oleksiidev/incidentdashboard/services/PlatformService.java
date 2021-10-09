@@ -31,7 +31,7 @@ public class PlatformService {
 
     public Platform updatePlatform(Long id, String newPlatformName) {
         Platform platform = platformRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(Platform.class, id));
+                .orElseThrow(() -> new NotFoundException("Platform", id));
         platform.setName(newPlatformName);
         return platformRepository.save(platform);
     }

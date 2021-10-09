@@ -28,7 +28,7 @@ public class ComponentController {
     @GetMapping("/id/{id}")
     public Component getComponentById(@PathVariable @NonNull Long id) {
         return componentService.findComponentById(id)
-                .orElseThrow(() -> new NotFoundException(Component.class, id));
+                .orElseThrow(() -> new NotFoundException("Component", id));
     }
 
     @GetMapping("/all")

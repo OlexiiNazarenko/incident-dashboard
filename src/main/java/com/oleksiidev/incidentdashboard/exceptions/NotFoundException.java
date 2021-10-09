@@ -1,7 +1,5 @@
 package com.oleksiidev.incidentdashboard.exceptions;
 
-import com.oleksiidev.incidentdashboard.model.BaseModel;
-
 public class NotFoundException extends RuntimeException{
     public NotFoundException(String msg) {
         super(msg);
@@ -17,13 +15,5 @@ public class NotFoundException extends RuntimeException{
 
     public NotFoundException(String entityName, String parameterName, String parameter) {
         super(String.format("No %s was found for for %s: %s", entityName, parameterName, parameter));
-    }
-
-    public NotFoundException(Class <? extends BaseModel> clazz, Long id) {
-        super(String.format("No %s was found for id: %d", clazz.getName(), id));
-    }
-
-    public NotFoundException(Class <? extends BaseModel> clazz, String parameterName, String parameter) {
-        super(String.format("No %s was found for for %s: %s", clazz.getName(), parameterName, parameter));
     }
 }

@@ -33,12 +33,12 @@ public class ComponentService {
 
     public List<Component> getComponentsByServiceId(Long serviceId) {
         return componentRepository.findComponentsByService(serviceService.findServiceById(serviceId)
-                .orElseThrow(() -> new NotFoundException(Service.class, serviceId)));
+                .orElseThrow(() -> new NotFoundException("Service", serviceId)));
     }
 
     public Component createComponent(ComponentDTO componentDTO) {
         Service service = serviceService.findServiceById(componentDTO.getServiceId())
-                .orElseThrow(() -> new NotFoundException(Service.class, componentDTO.getServiceId()));
+                .orElseThrow(() -> new NotFoundException("Service", componentDTO.getServiceId()));
 
         Set<Region> regions = regionService.getRegionsByIds(componentDTO.getRegionsIds());
         if (ObjectUtils.isEmpty(regions)) {
@@ -59,10 +59,10 @@ public class ComponentService {
         }
 
         Component component = componentRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(Component.class, id));
+                .orElseThrow(() -> new NotFoundException("Component", id));
 
         Service service = serviceService.findServiceById(componentDTO.getServiceId())
-                .orElseThrow(() -> new NotFoundException(Service.class, componentDTO.getServiceId()));
+                .orElseThrow(() -> new NotFoundException("Service", componentDTO.getServiceId()));
 
         Set<Region> regions = regionService.getRegionsByIds(componentDTO.getRegionsIds());
         if (ObjectUtils.isEmpty(regions)) {

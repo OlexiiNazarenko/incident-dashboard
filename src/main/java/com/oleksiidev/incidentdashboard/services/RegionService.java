@@ -36,7 +36,7 @@ public class RegionService {
 
     public Region updateRegionName(Long id, String newName) {
         Region region = regionRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(Region.class, id));
+                .orElseThrow(() -> new NotFoundException("Region", id));
         region.setName(newName);
         return regionRepository.save(region);
     }

@@ -37,18 +37,18 @@ public class SubscriptionService {
         }
 
         Platform platform = platformService.findPlatformById(subscriptionDTO.getPlatformId())
-                .orElseThrow(() -> new NotFoundException(Platform.class, subscriptionDTO.getPlatformId()));
+                .orElseThrow(() -> new NotFoundException("Platform", subscriptionDTO.getPlatformId()));
 
         for (Long serviceId : subscriptionDTO.getServiceIds()) {
             Service service = serviceService.findServiceById(serviceId)
-                    .orElseThrow(() -> new NotFoundException(Service.class, serviceId));
+                    .orElseThrow(() -> new NotFoundException("Service", serviceId));
 
             if(!service.getPlatform().getId().equals(subscriptionDTO.getPlatformId())) continue;
 
             for (Long regionId : subscriptionDTO.getRegionIds()) {
                 if (!getAllRegionIdsForService(service).contains(regionId)) continue;
                 Region region = regionService.findRegionById(regionId)
-                        .orElseThrow(() -> new NotFoundException(Region.class, regionId));
+                        .orElseThrow(() -> new NotFoundException("Region", regionId));
 
                 for (Long incidentTypeId : subscriptionDTO.getIncidentTypeIds()) {
                     IncidentType incidentType = incidentTypeService.findIncidentTypeById(incidentTypeId)

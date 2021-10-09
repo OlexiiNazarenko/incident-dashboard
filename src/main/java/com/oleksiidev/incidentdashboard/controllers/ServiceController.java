@@ -30,7 +30,7 @@ public class ServiceController {
         return serviceService.getAllServices();
     }
 
-    @GetMapping("/platformId/{id}")
+    @GetMapping("/platformId/{platformId}")
     public List<Service> getServicesForPlatformId(@PathVariable @NonNull Long platformId) {
         return serviceService.getServicesByPlatformId(platformId);
     }
@@ -38,7 +38,7 @@ public class ServiceController {
     @GetMapping("/id/{id}")
     public Service getServiceById(@PathVariable @NonNull Long id) {
         return serviceService.findServiceById(id)
-                .orElseThrow(() -> new NotFoundException(Service.class, id));
+                .orElseThrow(() -> new NotFoundException("Service", id));
     }
 
     @PostMapping("/create")
