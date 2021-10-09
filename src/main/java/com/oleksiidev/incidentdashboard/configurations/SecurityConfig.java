@@ -76,7 +76,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/region/all",
                         "/api/service/all",
                         "/api/service/platformId/*",
-                        "/api/service/id/*").permitAll()
+                        "/api/service/id/*",
+                        "/subscribe",
+                        "/unsubscribe",
+                        "/api/user/current",
+                        "/api/user/id/*",
+                        "/api/user/all").permitAll()
                 .antMatchers("/",
                         "/error",
                         "/favicon.ico",
