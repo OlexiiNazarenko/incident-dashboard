@@ -56,9 +56,9 @@ public class IncidentService {
                 .orElseThrow(() -> new NotFoundException("No user for id " + incidentDTO.getUserID())));
         newIncident.setDescription(incidentDTO.getDescription());
         newIncident.setType(incidentTypeService.findIncidentTypeById(incidentDTO.getIncidentTypeId())
-                .orElseThrow(() -> new NotFoundException(IncidentType.class, incidentDTO.getIncidentTypeId())));
+                .orElseThrow(() -> new NotFoundException("IncidentType", incidentDTO.getIncidentTypeId())));
         newIncident.setComponent(componentService.findComponentById(incidentDTO.getComponentId())
-                .orElseThrow(() -> new NotFoundException(Component.class, incidentDTO.getComponentId())));
+                .orElseThrow(() -> new NotFoundException("Component", incidentDTO.getComponentId())));
         newIncident.setStatus(IncidentStatus.valueOf(incidentDTO.getStatus()));
         newIncident.setStartDate(incidentDTO.getStartDate());
         newIncident.setEndDate(incidentDTO.getEndDate());
