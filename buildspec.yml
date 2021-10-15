@@ -3,18 +3,18 @@ phases:
   install:
     runtime-versions:
       java: corretto11
+      docker: 18
   pre_build:
     commands:
       - mvn test
   build:
     commands:
-      - mvn clean install
+      - mvn clean package
+      - docker build -t incident_dashboard .
 artifacts:
   files:
     - '**/*'
-#  base-directory: base_dir
-#  name: build-artifact-name
-#  discard-paths: no
+
 
 #  post_build:
 #    commands:
