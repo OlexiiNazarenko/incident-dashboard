@@ -5,7 +5,7 @@ phases:
       java: corretto11
   pre_build:
     commands:
-      - mvn test -eX
+      - mvn test -X
 #  build:
 #    commands:
 #      -
