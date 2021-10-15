@@ -8,7 +8,7 @@ phases:
       - mvn test
   build:
     commands:
-      - docker build -t incident_dashboard .
+      - mvn clean install
 artifacts:
   files:
     - '**/*'
