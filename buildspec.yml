@@ -3,7 +3,7 @@ phases:
   install:
     runtime-versions:
       java: corretto11
-      docker: 18
+      docker: latest
   pre_build:
     commands:
       - mvn test
