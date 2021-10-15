@@ -6,15 +6,16 @@ phases:
   pre_build:
     commands:
       - mvn test
+  build:
+    commands:
+      - docker build -t incident_dashboard .
 artifacts:
   files:
     - '**/*'
-  base-directory: base_dir
-  name: build-artifact-name
-  discard-paths: no
-#  build:
-#    commands:
-#      -
+#  base-directory: base_dir
+#  name: build-artifact-name
+#  discard-paths: no
+
 #  post_build:
 #    commands:
 #      - echo Build completed on `date`
