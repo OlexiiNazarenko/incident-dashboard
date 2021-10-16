@@ -5,19 +5,21 @@ pipeline {
         jdk 'jdk11'
     }
     stages {
-        stage ('Initialize') {
-            steps {
-                sh '''
-                    df -h
-                '''
-            }
-        }
         stage("test") {
             steps {
                 script {
                     sh '''
                         mvn test
-                        df -h
+                    '''
+                }
+            }
+        }
+        stage("build") {
+            steps {
+                script {
+                    sh '''
+                        mvn package
+                        ls -l
                     '''
                 }
             }
