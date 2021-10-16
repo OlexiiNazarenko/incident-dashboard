@@ -19,7 +19,8 @@ pipeline {
                 script {
                     sh '''
                         mvn package
-                        ls -l
+                        ls -l ./target
+                        docker build -t incident_dashboard .
                     '''
                 }
             }
