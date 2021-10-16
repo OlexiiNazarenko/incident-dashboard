@@ -8,8 +8,7 @@ pipeline {
         stage ('Initialize') {
             steps {
                 sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
+                    df -h
                 '''
             }
         }
@@ -18,6 +17,7 @@ pipeline {
                 script {
                     sh '''
                         mvn test
+                        df -h
                     '''
                 }
             }
