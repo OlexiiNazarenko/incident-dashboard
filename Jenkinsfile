@@ -19,8 +19,7 @@ pipeline {
                 script {
                     sh '''
                         mvn package
-                        ls -l ./target
-                        docker build -t incident_dashboard .
+                        docker build --memory=512m --cpus=0.5 -t incident_dashboard .
                     '''
                 }
             }
