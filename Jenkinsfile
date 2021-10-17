@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        mvn package
+                        mvn package -DskipTests
                         docker build --memory=512m -t incident_dashboard .
                     '''
                 }
