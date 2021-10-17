@@ -28,8 +28,8 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
+                    docker.withRegistry( 'https://830802944459.dkr.ecr.eu-central-1.amazonaws.com', 'ecr:eu-central-1:aws-jenkins-user' )
                     sh '''
-                        docker.withRegistry( 'https://830802944459.dkr.ecr.eu-central-1.amazonaws.com', 'ecr:eu-central-1:aws-jenkins-user' )
                         docker push 830802944459.dkr.ecr.eu-central-1.amazonaws.com/incident_dashboard:latest
                     '''
                 }
