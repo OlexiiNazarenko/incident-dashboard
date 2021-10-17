@@ -21,7 +21,15 @@ pipeline {
                         mvn package -DskipTests
                         docker build --memory=512m -t incident_dashboard .
                         docker tag incident_dashboard:latest 830802944459.dkr.ecr.eu-central-1.amazonaws.com/incident_dashboard:latest
-                        aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 830802944459.dkr.ecr.eu-central-1.amazonaws.com
+                    '''
+                }
+            }
+        }
+        stage("deploy") {
+            steps {
+                script {
+                    sh '''
+                        aws ecr get-login-password --region eu-central-1
                         docker push 830802944459.dkr.ecr.eu-central-1.amazonaws.com/incident_dashboard:latest
                     '''
                 }
