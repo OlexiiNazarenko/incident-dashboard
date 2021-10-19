@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureTestDatabase (replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles ("test")
-class UserServiceIT {
+class UserServiceIntegrationTest {
 
     private final UserRepository userRepository;
     private final UserService userService;
@@ -43,7 +43,7 @@ class UserServiceIT {
     private MockMvc mvc;
 
     @Autowired
-    public UserServiceIT(UserRepository userRepository, UserService userService, WebApplicationContext context) {
+    public UserServiceIntegrationTest(UserRepository userRepository, UserService userService, WebApplicationContext context) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.context = context;

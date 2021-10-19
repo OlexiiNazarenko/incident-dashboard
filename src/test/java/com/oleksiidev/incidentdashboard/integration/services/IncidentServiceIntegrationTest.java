@@ -45,7 +45,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase (replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles ("test")
-class IncidentServiceIT {
+class IncidentServiceIntegrationTest {
     private static final ZoneId SYSTEM_ZONE = ZonedDateTime.now().getZone();
     private static final ZonedDateTime START_DATE = ZonedDateTime.now(SYSTEM_ZONE).truncatedTo(ChronoUnit.SECONDS);
     private static final ZonedDateTime END_DATE = ZonedDateTime.now(SYSTEM_ZONE).plusDays(1).truncatedTo(ChronoUnit.SECONDS);
@@ -61,14 +61,14 @@ class IncidentServiceIT {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public IncidentServiceIT(IncidentRepository incidentRepository,
-                             IncidentService incidentService,
-                             IncidentTypeRepository incidentTypeRepository,
-                             ComponentRepository componentRepository,
-                             RegionRepository regionRepository,
-                             PlatformRepository platformRepository,
-                             ServiceRepository serviceRepository,
-                             UserRepository userRepository) {
+    public IncidentServiceIntegrationTest(IncidentRepository incidentRepository,
+                                          IncidentService incidentService,
+                                          IncidentTypeRepository incidentTypeRepository,
+                                          ComponentRepository componentRepository,
+                                          RegionRepository regionRepository,
+                                          PlatformRepository platformRepository,
+                                          ServiceRepository serviceRepository,
+                                          UserRepository userRepository) {
         this.incidentRepository = incidentRepository;
         this.incidentService = incidentService;
         this.incidentTypeRepository = incidentTypeRepository;

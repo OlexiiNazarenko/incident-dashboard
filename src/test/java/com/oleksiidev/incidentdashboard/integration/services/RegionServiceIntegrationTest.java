@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase (replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles ("test")
-class RegionServiceIT {
+class RegionServiceIntegrationTest {
 
     private final RegionService regionService;
     private final RegionRepository regionRepository;
 
     @Autowired
-    public RegionServiceIT(RegionService regionService, RegionRepository regionRepository) {
+    public RegionServiceIntegrationTest(RegionService regionService, RegionRepository regionRepository) {
         this.regionService = regionService;
         this.regionRepository = regionRepository;
     }

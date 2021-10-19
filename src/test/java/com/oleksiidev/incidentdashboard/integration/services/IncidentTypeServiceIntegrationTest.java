@@ -24,13 +24,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles ("test")
-class IncidentTypeServiceIT {
+class IncidentTypeServiceIntegrationTest {
 
     private final IncidentTypeService incidentTypeService;
     private final IncidentTypeRepository incidentTypeRepository;
 
     @Autowired
-    IncidentTypeServiceIT(IncidentTypeService incidentTypeService, IncidentTypeRepository incidentTypeRepository) {
+    IncidentTypeServiceIntegrationTest(IncidentTypeService incidentTypeService, IncidentTypeRepository incidentTypeRepository) {
         this.incidentTypeService = incidentTypeService;
         this.incidentTypeRepository = incidentTypeRepository;
     }

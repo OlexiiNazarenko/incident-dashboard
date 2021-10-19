@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -34,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase (replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles ("test")
-class ComponentServiceIT {
+class ComponentServiceIntegrationTest {
 
     private final ComponentService componentService;
     private final ComponentRepository componentRepository;
@@ -43,11 +44,11 @@ class ComponentServiceIT {
     private final ServiceRepository serviceRepository;
 
     @Autowired
-    public ComponentServiceIT(ComponentService componentService,
-                              ComponentRepository componentRepository,
-                              RegionRepository regionRepository,
-                              PlatformRepository platformRepository,
-                              ServiceRepository serviceRepository) {
+    public ComponentServiceIntegrationTest(ComponentService componentService,
+                                           ComponentRepository componentRepository,
+                                           RegionRepository regionRepository,
+                                           PlatformRepository platformRepository,
+                                           ServiceRepository serviceRepository) {
         this.componentService = componentService;
         this.componentRepository = componentRepository;
         this.regionRepository = regionRepository;

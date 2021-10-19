@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 @AutoConfigureTestDatabase (replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles ("test")
-class SubscriptionServiceIT {
+class SubscriptionServiceIntegrationTest {
 
     private final SubscriptionService subscriptionService;
 
@@ -48,13 +48,13 @@ class SubscriptionServiceIT {
     private final ComponentRepository componentRepository;
 
     @Autowired
-    public SubscriptionServiceIT(SubscriptionService subscriptionService,
-                                 SubscriptionRepository subscriptionRepository,
-                                 IncidentTypeRepository incidentTypeRepository,
-                                 PlatformRepository platformRepository,
-                                 RegionRepository regionRepository,
-                                 ServiceRepository serviceRepository,
-                                 ComponentRepository componentRepository) {
+    public SubscriptionServiceIntegrationTest(SubscriptionService subscriptionService,
+                                              SubscriptionRepository subscriptionRepository,
+                                              IncidentTypeRepository incidentTypeRepository,
+                                              PlatformRepository platformRepository,
+                                              RegionRepository regionRepository,
+                                              ServiceRepository serviceRepository,
+                                              ComponentRepository componentRepository) {
         this.subscriptionService = subscriptionService;
         this.subscriptionRepository = subscriptionRepository;
         this.incidentTypeRepository = incidentTypeRepository;

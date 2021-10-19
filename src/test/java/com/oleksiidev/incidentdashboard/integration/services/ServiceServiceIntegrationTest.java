@@ -25,14 +25,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase (replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles ("test")
-class ServiceServiceIT {
+class ServiceServiceIntegrationTest {
 
     private final ServiceService serviceService;
     private final ServiceRepository serviceRepository;
     private final PlatformRepository platformRepository;
 
     @Autowired
-    public ServiceServiceIT(ServiceService serviceService, ServiceRepository serviceRepository, PlatformRepository platformRepository) {
+    public ServiceServiceIntegrationTest(ServiceService serviceService, ServiceRepository serviceRepository, PlatformRepository platformRepository) {
         this.serviceService = serviceService;
         this.serviceRepository = serviceRepository;
         this.platformRepository = platformRepository;
