@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `INCIDENT` (
     `TypeID` bigint(20) DEFAULT NULL,
     `ComponentID` bigint(20) DEFAULT NULL,
     `UserID` bigint(20) DEFAULT NULL,
-    `Description` text,
+    `Description` varchar(255),
     `StartDate` timestamp,
     `EndDate` timestamp,
     `Status` enum('OPEN','CLOSED') NOT NULL DEFAULT 'OPEN',
