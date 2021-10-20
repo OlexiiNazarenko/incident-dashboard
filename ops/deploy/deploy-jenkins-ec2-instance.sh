@@ -20,5 +20,6 @@ groupadd docker
 usermod -aG docker jenkins
 usermod -aG docker ec2-user
 newgrp docker
+yum install git -y
 #cat /var/lib/jenkins/secrets/initialAdminPassword
 
